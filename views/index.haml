@@ -1,0 +1,11 @@
+%h1 Twitter
+%ul
+  - @tweets.each do |tweet|
+    %li= tweet['text']
+
+
+%h1 Flickr
+%ul
+  - for photo in @photos
+    %li
+      %a{:href => flickr_url(photo)}= flickr_square(photo)
