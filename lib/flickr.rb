@@ -11,7 +11,7 @@ class Flickr
   end
 
   def photos(options={})
-    options.merge!({ :method => 'flickr.photos.search', :per_page => '500', :page => '1' })
+    options.merge!({ :method => 'flickr.photos.search', :per_page => '500', :page => '1', :extras => 'date_taken, last_update, date_upload'})
     self.class.get('',:query => options)['rsp']['photos']['photo']
   end
   

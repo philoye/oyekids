@@ -21,7 +21,7 @@ def flickr_url(photo)
   "http://www.flickr.com/photos/philoye/#{photo['id']}/"
 end
 def flickr_square(photo)
-  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" />)
+  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75"/>)
 end
 def photo_path(photo)
   "/photos/#{photo[:id]}"
