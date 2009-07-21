@@ -1,5 +1,151 @@
-/* tk */
+/* -------------------------------------------------------------- 
+  Resets default browser CSS.
+-------------------------------------------------------------- */
 
-html, body {
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, code,
+del, dfn, em, img, q, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+}
+
+body { 
+  line-height: 1.5; 
+}
+
+/* Tables still need 'cellspacing="0"' in the markup. */
+table { border-collapse: separate; border-spacing: 0; }
+caption, th, td { text-align: left; font-weight: normal; }
+table, td, th { vertical-align: middle; }
+
+/* Remove possible quote marks (") from <q>, <blockquote>. */
+blockquote:before, blockquote:after, q:before, q:after { content: ""; }
+blockquote, q { quotes: "" ""; }
+
+/* Remove annoying border on linked images. */
+a img { border: none; }
+
+
+
+/* -------------------------------------------------------------- 
+  My stuff
+-------------------------------------------------------------- */
+
+body {
   font-family: "helvetica";
+  background-color: #222;
+  color: #fff;
+  margin: 23px;
+}
+
+
+ul.grid a {
+  text-decoration: none;
+}
+ul.grid li {
+  list-style: none;
+  float: left;
+}
+
+li.tweet {
+  background-color: #333;
+  font-size: 13px;
+  margin: 2px;
+}
+  li.tweet a {
+    height: 65px;
+    padding: 5px;
+    width: 302px;
+    display: block;
+    background-color: #333;
+  }
+    li.tweet a:hover {
+      color: #222;
+      background-color: cyan;
+    }
+
+li.photo img{
+  border: 2px solid #222;
+}
+  li.photo a:hover img {
+    border: 2px solid cyan;
+  }
+
+
+img {
+  display: block;
+}
+
+.header {
+  height: 75px;
+  margin-bottom: 79px;
+}
+.content {
+  clear: both;
+  overflow: auto;
+  background: url('../images/bg-grid.gif') repeat;
+}
+.footer {
+  clear: both;
+  margin: 2px;
+  padding-top: 79px;
+  width: 312px;
+}
+
+ul.grid {
+}
+
+ul.navigation {
+  background-color: #222;
+}
+
+ul.navigation li {
+  list-style: none;
+  float: left;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
+}
+  ul.navigation li a {
+    height: 65px;
+    margin: 2px;
+    padding: 5px;
+    width: 65px;
+    display: block;
+    background-color: #333;
+  }
+  ul.navigation a:hover {
+    color: #222;
+    background-color: cyan;
+  }
+
+h1 {
+  color: cyan;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 2px;
+  float: right;
+  height: 75px;
+}
+  h1 span {
+    font-weight: normal;
+  }
+
+.felixoye a {
+  color: cyan;
+}
+.jessicaoye a {
+  color: magenta;
+}
+.simonoye a {
+  color: orange;
 }
