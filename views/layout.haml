@@ -10,11 +10,8 @@
   %body{:class => @section}
     .container{:class => ''}
 
-      .header
-        = partial :header
-        
+      = partial :header
       .content
         = yield
       
-      .footer
-        = partial :footer
+      = partial :footer

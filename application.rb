@@ -9,6 +9,8 @@ module CrossTheStreams
       $config = YAML.load_file('config/application.yml')
 
       set :haml, {:format => :html4}
+      set :public, File.join(File.dirname(__FILE__),'public')
+      set :views, File.join(File.dirname(__FILE__),'views')
       set :static, true
 
       Dir.glob('lib/*.rb') do |filename|
