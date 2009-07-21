@@ -95,7 +95,7 @@ img {
   background: url('../images/bg-grid.gif') repeat;
 }
 .footer {
-  clear: both;
+  overflow: auto;
   margin: 2px;
   padding-top: 79px;
   width: 312px;
@@ -148,4 +148,8 @@ h1 {
 }
 .simonoye a {
   color: orange;
+}
+
+br {
+  clear: both;
 }
