@@ -2,15 +2,16 @@ def versioned_stylesheet(stylesheet)
   __DIR__ = File.dirname(__FILE__)
   "/css/#{stylesheet}.css?" + File.mtime(File.join(__DIR__,"..", 'public', "css", "#{stylesheet}.css")).to_i.to_s
 end
-
 def versioned_javascript(js)
   __DIR__ = File.dirname(__FILE__)
   "/js/#{js}.js?" + File.mtime(File.join(__DIR__,"..", 'public', "js", "#{js}.js")).to_i.to_s
 end
 
+
 def partial(name)
   haml(:"_#{name}", :layout => false)
 end
+
 
 def flickr_src(photo, size=nil)
   "http://farm#{photo['farm']}.static.flickr.com/#{photo['server']}/#{photo['id']}_#{photo['secret']}#{size && "_#{size}"}.jpg"

@@ -17,8 +17,8 @@ module CrossTheStreams
     end
 
     get '/' do 
-      t = $config['services']['twitter']['users'][1]
-      @tweets = Twitter.new(t['username'], t['password']).timeline
+      t = $config['services']['twitter']['users'][0]
+      @tweets = Twitter.new(t['username'], t['password']).filtered_tweets('felix, felixoye')
 
       f = $config['services']['flickr']
       @photos = Flickr.new(f['users'][0]['nsid']).photos(:tags => "felix, felixoye")
