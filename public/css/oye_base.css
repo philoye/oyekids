@@ -148,15 +148,10 @@ h1 {
     float: left;
   }
 
-.felixoye a {
-  color: cyan;
-}
-.jessicaoye a {
-  color: magenta;
-}
-.simonoye a {
-  color: orange;
-}
+.philoye a:hover    { background-color: orange !important; }
+.jessicaoye a:hover { background-color: red !important; }
+.simonoye a:hover   { background-color: #cf0 !important; }
+.jenioye a:hover    { background-color: magenta !important; }
 
 br {
   clear: both;
