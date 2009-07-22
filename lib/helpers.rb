@@ -18,11 +18,15 @@ def flickr_src(photo, size=nil)
 end
 def flickr_url(photo)
   #TODO: remove hard coded username
-  "http://www.flickr.com/photos/philoye/#{photo['id']}/"
+  "http://www.flickr.com/photos/#{photo['ownername']}/#{photo['id']}/"
 end
 def flickr_square(photo)
   %(<img src="#{flickr_src(photo, "s")}" width="75" height="75"/>)
 end
 def photo_path(photo)
   "/photos/#{photo[:id]}"
+end
+
+def twitter_url(tweet)
+  "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id'].to_s
 end

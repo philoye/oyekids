@@ -1,6 +1,7 @@
 require 'rubygems' 
 require 'sinatra' 
 require 'haml'
+require 'pp'
 
 module CrossTheStreams
   class Application < Sinatra::Base
@@ -35,7 +36,7 @@ module CrossTheStreams
         photo['created'] = d
       end
       @river = tweets + photos
-      @river.sort_by { |drop| drop['created'] }
+      @river = @river.sort_by { |drop| drop['created'] }.reverse!
       haml :index
     end
 
@@ -54,12 +55,10 @@ module CrossTheStreams
     end
 
     not_found do
-      content_type 'text/html'
       haml :not_found
     end
     error do
       @error = request.env['sinatra.error'].to_s
-      content_type 'text/html'
       haml :error
     end unless Sinatra::Application.environment == :development
     

@@ -73,7 +73,7 @@ li.tweet {
       background-color: cyan;
     }
 
-li.photo img{
+li img{
   border: 2px solid #222;
 }
   li.photo a:hover img {
@@ -85,6 +85,10 @@ img {
   display: block;
 }
 
+.container {
+  width: 948px;
+  
+}
 .header {
   height: 75px;
   margin-bottom: 79px;
@@ -133,11 +137,15 @@ h1 {
   font-size: 48px;
   font-weight: bold;
   margin: 2px;
-  float: right;
+  float: left;
   height: 75px;
+  width: 391px;
 }
   h1 span {
     font-weight: normal;
+  }
+  div.icon {
+    float: left;
   }
 
 .felixoye a {
