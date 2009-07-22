@@ -14,10 +14,11 @@ class Twitter
    self.class.get("/statuses/#{which}_timeline.json", options)
   end
 
-  def filtered_tweets(whitelist=nil,blacklist=nil)
-    timeline.reject do |tweet|
-      tweet['text'][0] == 64 # or tweet['text'].downcase.include? "definitely"
-    end
+  def filter_replies()
+    timeline.reject { |tweet| tweet['text'][0] == 64 }
+  end
+  def filter_tweets(blacklist=nil)
+    timeline.reject { |tweet| tweet['text'].downcase.include? blacklist }
   end
   
 end

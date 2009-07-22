@@ -30,3 +30,5 @@ end
 def twitter_url(tweet)
   "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id'].to_s
 end
+
+
