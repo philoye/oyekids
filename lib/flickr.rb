@@ -4,7 +4,7 @@ require 'httparty'
 class Flickr
 	include HTTParty
   base_uri 'http://api.flickr.com/services/rest'
-  default_params :api_key => $config['services']['Flickr']['api_key'], :output => 'json'
+  default_params :api_key => $config['services']['flickr']['api_key'], :output => 'json'
 
   def initialize(nsid)
     self.class.default_params :user_id => nsid

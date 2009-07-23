@@ -99,11 +99,30 @@ img {
   background: url('../images/bg-grid.gif') repeat;
 }
 .footer {
+  clear: both;
   overflow: auto;
   margin: 2px;
-  padding-top: 79px;
-  width: 312px;
+  margin-top: 79px;
+  height: 154px;
+  width: 944px;
+  color: #777;
+  font-size: 13px;
 }
+  .footer .about {
+    float: left;
+    width: 292px;
+    padding-right: 20px;
+  }
+  .footer .links {
+    float: left;
+    margin-left: 4px;
+    width: 292px;
+    padding-right: 20px;
+  }
+  .footer .links ul {
+    list-style: none;
+    
+  }
 
 ul.grid {
 }
