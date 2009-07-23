@@ -108,6 +108,9 @@ img {
   color: #777;
   font-size: 13px;
 }
+  .footer a {
+    color: #999;
+  }
   .footer .about {
     float: left;
     width: 292px;
@@ -169,7 +172,7 @@ h1 {
 
 .philoye a:hover    { background-color: orange !important; }
 .jessicaoye a:hover { background-color: red !important; }
-.simonoye a:hover   { background-color: #cf0 !important; }
+.simonoye a:hover   { background-color: #bf0 !important; }
 .jenioye a:hover    { background-color: magenta !important; }
 
 br {
