@@ -20,7 +20,7 @@ module CrossTheStreams
     end
 
     get '/' do 
-      t = $config['services']['Twitter']['users'][0]
+      t = $config['services']['twitter']['users'][0]
       tweets = Twitter.new(t['username'], t['password']).filter_replies
       tweets.each do |tweet|
         s = tweet['created_at']
@@ -28,7 +28,7 @@ module CrossTheStreams
         tweet['created'] = d
       end
 
-      f = $config['services']['Flickr']
+      f = $config['services']['flickr']
       photos = Flickr.new(f['users'][0]['nsid']).photos(:tags => f['users'][0]['tags'])
       photos.each do |photo|
         s = photo['datetaken']
