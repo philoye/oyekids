@@ -111,6 +111,9 @@ img {
   .footer a {
     color: #999;
   }
+    .footer a:hover {
+      color: #ccc;
+    }
   .footer .about {
     float: left;
     width: 292px;
