@@ -20,10 +20,10 @@ def flickr_url(photo)
   "http://www.flickr.com/photos/#{photo['ownername']}/#{photo['id']}/"
 end
 def flickr_square(photo)
-  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75"/>)
+  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo['title']}" />)
 end
 def photo_path(photo)
-  "/photos/#{photo[:id]}"
+  "/photos/#{photo['id']}"
 end
 
 def twitter_url(tweet)
@@ -34,11 +34,11 @@ def gather_all_photos(feeds)
   all_photos = []
   feeds.each do |feed|
     temp_photos = Flickr.new(feed['nsid']).photos(:tags => feed['tags'])
-    # temp_photos.each do |photo|
-    #   s = photo['date_taken']
-    #   d = DateTime.parse(s).to_s
-    #   photo['created'] = d
-    # end
+    temp_photos.each do |photo|
+      s = photo['datetaken']
+      d = DateTime.parse(s).to_s
+      photo['created'] = s
+    end
     all_photos = temp_photos + all_photos
   end
   all_photos
