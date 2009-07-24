@@ -17,7 +17,6 @@ def flickr_src(photo, size=nil)
   "http://farm#{photo['farm']}.static.flickr.com/#{photo['server']}/#{photo['id']}_#{photo['secret']}#{size && "_#{size}"}.jpg"
 end
 def flickr_url(photo)
-  #TODO: remove hard coded username
   "http://www.flickr.com/photos/#{photo['ownername']}/#{photo['id']}/"
 end
 def flickr_square(photo)
@@ -29,6 +28,33 @@ end
 
 def twitter_url(tweet)
   "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id'].to_s
+end
+
+def gather_all_photos(feeds)
+  all_photos = []
+  feeds.each do |feed|
+    temp_photos = Flickr.new(feed['nsid']).photos(:tags => feed['tags'])
+    # temp_photos.each do |photo|
+    #   s = photo['date_taken']
+    #   d = DateTime.parse(s).to_s
+    #   photo['created'] = d
+    # end
+    all_photos = temp_photos + all_photos
+  end
+  all_photos
+end
+def gather_all_tweets(feeds)
+  all_tweets = []
+  feeds.each do |feed|
+    temp_tweets = Twitter.new(feed['username'], feed['password']).filter_tweets(feed['include'],feed['reject'])
+    temp_tweets.each do |tweet|
+      s = tweet['created_at']
+      d = DateTime.parse(s).to_s
+      tweet['created'] = d
+    end
+    all_tweets = temp_tweets + all_tweets
+  end
+  all_tweets
 end
 
 
