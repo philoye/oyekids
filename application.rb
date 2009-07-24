@@ -27,19 +27,19 @@ module CrossTheStreams
       haml :index
     end
 
-    get '/test' do
-
-    end
-
-    get '/photos/' do
-      
+    get '/photos/?' do
+      @river = gather_all_photos($config['services']['flickr']['users'])
+      @river = @river.sort_by { |drop| drop['created'] }.reverse!
+      haml :index
     end
     get '/photos/:id' do
       
     end
 
-    get '/tweets/' do
-
+    get '/tweets/?' do
+      @river = gather_all_tweets($config['services']['twitter']['users'])
+      @river = @river.sort_by { |drop| drop['created'] }.reverse!
+      haml :index
     end
     get '/tweets/:id' do
 
