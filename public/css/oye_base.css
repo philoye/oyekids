@@ -58,7 +58,8 @@ ul.grid li {
 
 li.tweet {
   background-color: #333;
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 15px;
   margin: 2px;
 }
   li.tweet a {

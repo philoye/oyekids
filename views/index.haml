@@ -2,7 +2,7 @@
   - @river.each do |drop|
     - if drop['text'] # it is a tweet
       %li.tweet
-        %a{:href => twitter_url(drop)}= drop['text']
+        %a{:href => twitter_url(drop)}= drop['text'] + " — "  + drop['user']['screen_name']
     - elsif drop['farm'] # it is a flickr photo
       %li.photo
         %a{:href => flickr_url(drop) }= flickr_square(drop)

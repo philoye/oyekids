@@ -20,19 +20,10 @@ module CrossTheStreams
     end
 
     get '/' do 
-      
       tweets = gather_all_tweets($config['services']['twitter']['users'])
       photos = gather_all_photos($config['services']['flickr']['users'])
-
-      # f = $config['services']['flickr']
-      # photos = Flickr.new(f['users'][0]['nsid']).photos(:tags => f['users'][0]['tags'])
-      # photos.each do |photo|
-      #   s = photo['datetaken']
-      #   d = DateTime.parse(s).to_s
-      #   photo['created'] = d
-      # end
       @river = tweets + photos
-      # @river = @river.sort_by { |drop| drop['created'] }.reverse!
+      @river = @river.sort_by { |drop| drop['created'] }.reverse!
       haml :index
     end
 
