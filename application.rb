@@ -42,7 +42,8 @@ module CrossTheStreams
       haml :index
     end
     get '/tweets/:id' do
-
+      allowed_users = $config['services']['twitter']['users']
+      @tweet = Twitter.new(allowed_users[0]['username'], allowed_users[0]['password']).show(params[:id])
     end
 
     not_found do
