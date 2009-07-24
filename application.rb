@@ -20,23 +20,19 @@ module CrossTheStreams
     end
 
     get '/' do 
-      t = $config['services']['twitter']['users'][0]
-      tweets = Twitter.new(t['username'], t['password']).filter_replies
-      tweets.each do |tweet|
-        s = tweet['created_at']
-        d = DateTime.parse(s).to_s
-        tweet['created'] = d
-      end
+      
+      tweets = gather_all_tweets($config['services']['twitter']['users'])
+      photos = gather_all_photos($config['services']['flickr']['users'])
 
-      f = $config['services']['flickr']
-      photos = Flickr.new(f['users'][0]['nsid']).photos(:tags => f['users'][0]['tags'])
-      photos.each do |photo|
-        s = photo['datetaken']
-        d = DateTime.parse(s).to_s
-        photo['created'] = d
-      end
+      # f = $config['services']['flickr']
+      # photos = Flickr.new(f['users'][0]['nsid']).photos(:tags => f['users'][0]['tags'])
+      # photos.each do |photo|
+      #   s = photo['datetaken']
+      #   d = DateTime.parse(s).to_s
+      #   photo['created'] = d
+      # end
       @river = tweets + photos
-      @river = @river.sort_by { |drop| drop['created'] }.reverse!
+      # @river = @river.sort_by { |drop| drop['created'] }.reverse!
       haml :index
     end
 
