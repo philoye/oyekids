@@ -1,10 +1,12 @@
 %ul.grid
-  - @river.each do |drop|
-    - if drop['text'] # it is a tweet
-      %li.tweet
-        %a{:href => twitter_url(drop)}= drop['text'] + " — "  + drop['user']['screen_name']
-    - elsif drop['farm'] # it is a flickr photo
-      %li.photo
-        %a{:href => flickr_url(drop) }= flickr_square(drop)
-
-/ =@river.inspect
+  - @river_by_month.each do |month,river|
+    %h2
+      Month
+      %span= month
+    - river.each do |drop|
+      - if drop['text'] # it is a tweet
+        %li.tweet
+          %a{:href => twitter_url(drop)}= drop['text'] + " —&nbsp;@"  + drop['user']['screen_name']
+      - elsif drop['farm'] # it is a flickr photo
+        %li.photo
+          %a{:href => flickr_url(drop) }= flickr_square(drop)

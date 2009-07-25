@@ -35,9 +35,10 @@ def gather_all_photos(feeds)
   feeds.each do |feed|
     temp_photos = Flickr.new(feed['nsid']).photos(:tags => feed['tags'])
     temp_photos.each do |photo|
-      s = photo['datetaken']
-      d = DateTime.parse(s).to_s
-      photo['created'] = s
+      bd = DateTime.parse($config['birthdate'].to_s)
+      d = DateTime.parse(photo['datetaken'])
+      photo['created'] = d.to_s
+      photo['age_month']  = ((d - bd)/30).to_i.to_s
     end
     all_photos = temp_photos + all_photos
   end
@@ -48,9 +49,10 @@ def gather_all_tweets(feeds)
   feeds.each do |feed|
     temp_tweets = Twitter.new(feed['username'], feed['password']).filter_tweets(feed['include'],feed['reject'])
     temp_tweets.each do |tweet|
-      s = tweet['created_at']
-      d = DateTime.parse(s).to_s
-      tweet['created'] = d
+      bd = DateTime.parse($config['birthdate'].to_s)
+      d = DateTime.parse(tweet['created_at'])
+      tweet['created'] = d.to_s
+      tweet['age_month']  = ((d - bd)/30).to_i.to_s
     end
     all_tweets = temp_tweets + all_tweets
   end

@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra' 
 require 'haml'
 require 'pp'
+require 'active_support'
 
 module CrossTheStreams
   class Application < Sinatra::Base
@@ -22,9 +23,11 @@ module CrossTheStreams
     get '/' do 
       tweets = gather_all_tweets($config['services']['twitter']['users'])
       photos = gather_all_photos($config['services']['flickr']['users'])
-      @river = tweets + photos
-      @river = @river.sort_by { |drop| drop['created'] }.reverse!
+      river = tweets + photos
+      river = river.sort_by { |drop| drop['created'] }.reverse!
+      @river_by_month = river.group_by { |drop| drop['age_month'] }
       haml :index
+      # river.inspect.to_s
     end
 
     get '/photos/?' do
