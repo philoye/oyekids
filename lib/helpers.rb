@@ -31,32 +31,32 @@ def twitter_url(tweet)
 end
 
 def gather_all_photos(feeds)
-  all_photos = []
+  all_items = []
   feeds.each do |feed|
-    temp_photos = Flickr.new(feed['nsid']).photos(:tags => feed['tags'])
-    temp_photos.each do |photo|
+    items = Flickr.new(feed['nsid']).photos(:tags => feed['tags'])
+    items.each do |photo|
       bd = DateTime.parse($config['birthdate'].to_s)
       d = DateTime.parse(photo['datetaken'])
       photo['created'] = d.to_s
-      photo['age_month']  = ((d - bd)/30).to_i.to_s
+      photo['age_month']  = ((d - bd) / 30.4).to_i.to_s
     end
-    all_photos = temp_photos + all_photos
+    all_items = items + all_items
   end
-  all_photos
+  all_items
 end
 def gather_all_tweets(feeds)
-  all_tweets = []
+  all_items = []
   feeds.each do |feed|
-    temp_tweets = Twitter.new(feed['username'], feed['password']).filter_tweets(feed['include'],feed['reject'])
-    temp_tweets.each do |tweet|
+    items = Twitter.new(feed['username'], feed['password']).filter_tweets(feed['include'],feed['reject'])
+    items.each do |tweet|
       bd = DateTime.parse($config['birthdate'].to_s)
       d = DateTime.parse(tweet['created_at'])
       tweet['created'] = d.to_s
       tweet['age_month']  = ((d - bd)/30).to_i.to_s
     end
-    all_tweets = temp_tweets + all_tweets
+    all_items = items + all_items
   end
-  all_tweets
+  all_items
 end
 
 
