@@ -43,7 +43,7 @@ a img { border: none; }
 body {
   font-family: "helvetica";
   background-color: #222;
-  color: #fff;
+  color: #ddd;
   margin: 23px;
 }
 
@@ -82,18 +82,14 @@ li.tweet {
   font-size: 12px;
   line-height: 15px;
   margin: 2px;
+  height: 65px;
+  padding: 5px;
+  width: 302px;
 }
-  li.tweet a {
-    height: 65px;
-    padding: 5px;
-    width: 302px;
-    display: block;
-    background-color: #1b1b1b;
+  li.tweet a:hover {
+    color: #222;
+    background-color: cyan;
   }
-    li.tweet a:hover {
-      color: #222;
-      background-color: cyan;
-    }
 
 li img{
   border: 2px solid #222;

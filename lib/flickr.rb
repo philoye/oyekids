@@ -19,4 +19,8 @@ class Flickr
     self.class.get('',:query => {:method => 'flickr.photos.getInfo', :photo_id => id})['rsp']['photo']
   end
   
+  def photo_comments(id)
+    self.class.get('',:query => {:method => 'flickr.photos.comments.getList', :photo_id => id})['rsp']['comments']['comment']
+  end
+  
 end
