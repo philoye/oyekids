@@ -7,11 +7,9 @@ def versioned_javascript(js)
   "/js/#{js}.js?" + File.mtime(File.join(__DIR__,"..", 'public', "js", "#{js}.js")).to_i.to_s
 end
 
-
 def partial(name)
   haml(:"_#{name}", :layout => false)
 end
-
 
 def flickr_src(photo, size=nil)
   "http://farm#{photo['farm']}.static.flickr.com/#{photo['server']}/#{photo['id']}_#{photo['secret']}#{size && "_#{size}"}.jpg"
@@ -28,6 +26,9 @@ end
 
 def twitter_url(tweet)
   "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id'].to_s
+end
+def format_tweet(text)
+  text.linkify.link_mentions.link_hash_tags
 end
 
 def gather_all_photos(feeds)
@@ -60,3 +61,14 @@ def gather_all_tweets(feeds)
 end
 
 
+class String
+  def linkify
+    gsub /((https?:\/\/|www\.)([-\w\.]+)+(:\d+)?(\/([\w\/_\.]*(\?\S+)?)?)?)/, %Q{<a href="\\1">\\1</a>}
+  end
+  def link_mentions
+    gsub(/@(\w+)/, %Q{<a href="http://twitter.com/\\1">@\\1</a>})
+  end
+  def link_hash_tags
+    gsub(/#([^ ]*)/){ "<a class=\"hash_tag\" href=\"http://twitter.com/#search?q=%23#{$1}\">##{$1}</a>" }
+  end
+end
