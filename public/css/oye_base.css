@@ -78,7 +78,7 @@ ul.grid li {
 }
 
 li.tweet {
-  background-color: #333;
+  background-color: #1b1b1b;
   font-size: 12px;
   line-height: 15px;
   margin: 2px;
@@ -88,7 +88,7 @@ li.tweet {
     padding: 5px;
     width: 302px;
     display: block;
-    background-color: #333;
+    background-color: #1b1b1b;
   }
     li.tweet a:hover {
       color: #222;
@@ -170,11 +170,15 @@ ul.navigation li {
     width: 65px;
     display: block;
     background-color: #333;
+    text-decoration: none;
   }
   ul.navigation a:hover {
     color: #222;
     background-color: cyan;
+    border: 0;
+    text-decoration: none;
   }
+
 
 h1 {
   color: cyan;
@@ -183,7 +187,8 @@ h1 {
   margin: 2px;
   float: left;
   height: 75px;
-  width: 391px;
+  padding-left: 5px;
+  width: 540px;
 }
   h1 span {
     font-weight: normal;

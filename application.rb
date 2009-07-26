@@ -23,28 +23,29 @@ module CrossTheStreams
     get '/' do 
       tweets = gather_all_tweets($config['services']['twitter']['users'])
       photos = gather_all_photos($config['services']['flickr']['users'])
-      river = tweets + photos
-      river = river.sort_by { |drop| drop['created'] }.reverse!
-      @river_by_month = river.group_by { |drop| drop['age_month'] }
+      @river = tweets + photos
+      @river = @river.sort_by { |drop| drop['created'] }.reverse!
+      @river_by_month = @river.group_by { |drop| drop['age_month'] }
       haml :index
-      # river.inspect.to_s
     end
 
     get '/photos/?' do
       @river = gather_all_photos($config['services']['flickr']['users'])
       @river = @river.sort_by { |drop| drop['created'] }.reverse!
+      @river_by_month = @river.group_by { |drop| drop['age_month'] }
       haml :index
     end
-    get '/photos/:id' do
+    get '/photos/:id/?' do
       
     end
 
     get '/tweets/?' do
       @river = gather_all_tweets($config['services']['twitter']['users'])
       @river = @river.sort_by { |drop| drop['created'] }.reverse!
+      @river_by_month = @river.group_by { |drop| drop['age_month'] }
       haml :index
     end
-    get '/tweets/:id' do
+    get '/tweets/:id/?' do
       allowed_users = $config['services']['twitter']['users']
       @tweet = Twitter.new(allowed_users[0]['username'], allowed_users[0]['password']).show(params[:id])
     end
