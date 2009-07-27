@@ -47,62 +47,6 @@ body {
   margin: 23px;
 }
 
-h2 {
-  float: left;
-  height: 65px;
-  width: 65px;
-  padding: 5px;
-  margin: 2px;
-  text-transform: uppercase;
-  font-size: 10px;
-  font-weight: bold;
-  background-color: #1b1b1b;
-  color: #666;
-  text-align: center;
-  letter-spacing: 1px;
-}
-  h2 span {
-    display: block;
-    font-size: 48px;
-    font-weight: bold;
-    line-height: 48px;
-    letter-spacing: -1px;
-  }
-
-ul.grid a {
-  text-decoration: none;
-}
-ul.grid li {
-  list-style: none;
-  float: left;
-}
-
-li.tweet {
-  background-color: #1b1b1b;
-  font-size: 12px;
-  line-height: 15px;
-  margin: 2px;
-  height: 65px;
-  padding: 5px;
-  width: 302px;
-}
-  li.tweet a:hover {
-    color: #222;
-    background-color: cyan;
-  }
-
-li img{
-  border: 2px solid #222;
-}
-  li.photo a:hover img {
-    border: 2px solid cyan;
-  }
-
-
-img {
-  display: block;
-}
-
 .container {
   width: 948px;
   
@@ -126,6 +70,108 @@ img {
   color: #777;
   font-size: 13px;
 }
+
+
+h1 {
+  color: #ccc;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 2px;
+  float: left;
+  height: 75px;
+  padding-left: 5px;
+  width: 540px;
+}
+  h1 span {
+    font-weight: normal;
+  }
+  h1 div.icon {
+    float: left;
+  }
+
+
+h2 {
+  float: left;
+  height: 65px;
+  width: 65px;
+  padding: 5px;
+  margin: 2px;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
+  background-color: #1b1b1b;
+  color: #666;
+  text-align: center;
+  letter-spacing: 1px;
+}
+  h2 span {
+    display: block;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 48px;
+    letter-spacing: -1px;
+  }
+
+
+
+
+ul.navigation {
+  background-color: #222;
+}
+  ul.navigation li {
+    list-style: none;
+    float: left;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: bold;
+  }
+    ul.navigation li a {
+      height: 65px;
+      margin: 2px;
+      padding: 5px;
+      width: 65px;
+      display: block;
+      background-color: #333;
+      text-decoration: none;
+    }
+      ul.navigation li a:hover {
+        color: #222;
+        background-color: #ccc;
+        border: 0;
+        text-decoration: none;
+      }
+
+
+ul.grid li {
+  list-style: none;
+  float: left;
+}
+  li.tweet {
+    color: #999;
+    background-color: #1b1b1b;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 2px;
+    height: 65px;
+    padding: 5px;
+    width: 302px;
+  }
+ul.grid a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+}
+li img{
+  border: 2px solid #222;
+}
+  li.photo a:hover img {
+    border: 2px solid #ccc;
+  }
+
+
+
   .footer a {
     color: #999;
   }
@@ -148,56 +194,22 @@ img {
     
   }
 
-ul.navigation {
-  background-color: #222;
-}
+.felixoye h1, .felixoye a { color: cyan;}
+.jessicaoye h1, .jessicaoye a { color: red;}
+.simonoye h1, .simonoye a { color: #bf0;}
+.oyekids h1, .oyekids a { color: #bf0;}
 
-ul.navigation li {
-  list-style: none;
-  float: left;
-  text-transform: uppercase;
-  font-size: 10px;
-  font-weight: bold;
-}
-  ul.navigation li a {
-    height: 65px;
-    margin: 2px;
-    padding: 5px;
-    width: 65px;
-    display: block;
-    background-color: #333;
-    text-decoration: none;
-  }
-  ul.navigation a:hover {
-    color: #222;
-    background-color: cyan;
-    border: 0;
-    text-decoration: none;
-  }
+.felixoye a:hover { color:#222; background-color: cyan !important; }
+.jessicaoye a:hover { color:#222; background-color: red !important; }
+.simonoye a:hover   { color:#222; background-color: #bf0 !important; }
+.oyekids a:hover   { color:#222; background-color: #bf0 !important; }
 
-
-h1 {
-  color: cyan;
-  font-size: 48px;
-  font-weight: bold;
-  margin: 2px;
-  float: left;
-  height: 75px;
-  padding-left: 5px;
-  width: 540px;
-}
-  h1 span {
-    font-weight: normal;
-  }
-  div.icon {
-    float: left;
-  }
-
-.philoye a:hover    { background-color: orange !important; }
-.jessicaoye a:hover { background-color: red !important; }
-.simonoye a:hover   { background-color: #bf0 !important; }
-.jenioye a:hover    { background-color: magenta !important; }
+.felixoye a:hover img { border-color: cyan !important; }
+.jessicaoye a:hover img { border-color: red !important; }
+.simonoye a:hover img { border-color: #bf0 !important; }
+.oyekids a:hover img { background-color: #bf0 !important; }
 
 br {
   clear: both;
 }
+
