@@ -7,7 +7,7 @@
       - if drop['text'] # it is a tweet
         %li.tweet
           = format_tweet(drop['text']) + "<br>—&nbsp;@" + drop['user']['screen_name'] + ", "
-          %a{:href=> twitter_url(drop)}= drop['created_at'].to_s
+          %a{:href=> twitter_url(drop)}= pretty_date(drop['created_at'])
           
       - elsif drop['farm'] # it is a flickr photo
         %li.photo

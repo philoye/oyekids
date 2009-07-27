@@ -31,6 +31,11 @@ def format_tweet(text)
   text.linkify.link_mentions.link_hash_tags
 end
 
+def pretty_date(datetime_string)
+  dt = DateTime.parse(datetime_string)
+  dt.strftime("%d %B %y, %I:%m%p")
+end
+
 def gather_all_photos(feeds)
   all_items = []
   feeds.each do |feed|
@@ -38,8 +43,8 @@ def gather_all_photos(feeds)
     items.each do |photo|
       bd = DateTime.parse($config['birthdate'].to_s)
       d = DateTime.parse(photo['datetaken'])
-      photo['created'] = d.to_s
       photo['age_month']  = ((d - bd) / 30.4).to_i.to_s
+      photo['created'] = d
     end
     all_items = items + all_items
   end
@@ -52,8 +57,8 @@ def gather_all_tweets(feeds)
     items.each do |tweet|
       bd = DateTime.parse($config['birthdate'].to_s)
       d = DateTime.parse(tweet['created_at'])
-      tweet['created'] = d.to_s
       tweet['age_month']  = ((d - bd)/30).to_i.to_s
+      tweet['created'] = d
     end
     all_items = items + all_items
   end
