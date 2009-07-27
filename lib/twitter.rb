@@ -1,16 +1,18 @@
 require 'rubygems'
 require 'httparty'
+require 'lib/icebox'
 
 class Twitter
   include HTTParty
+  include Icebox
   base_uri 'twitter.com'
 
-  def initialize(u, p)
-    @auth = {:username => u, :password => p}
+  def initialize(u)
+    @user = u
   end
     
   def show(id)
-    tweet = self.class.get("/statuses/show/#{id}.json", :basic_auth => @auth)
+    tweet = self.class.get_cached("/statuses/show/#{id}.json")
     users = $config['services']['twitter']['users']
     whitelist = []
     users.each do |user|
@@ -19,9 +21,8 @@ class Twitter
     if whitelist.include? tweet['user']['screen_name'] then tweet end
   end
     
-  def timeline(which=:user, options={})
-    options.merge!({ :basic_auth => @auth} )
-    self.class.get("/statuses/#{which}_timeline.json", options)
+  def timeline(username=:username, options={})
+    self.class.get_cached("/statuses/user_timeline/#{@user}.json", options)
   end
 
   def filter_tweets(whitelist,blacklist)

@@ -53,7 +53,7 @@ end
 def gather_all_tweets(feeds)
   all_items = []
   feeds.each do |feed|
-    items = Twitter.new(feed['username'], feed['password']).filter_tweets(feed['include'],feed['reject'])
+    items = Twitter.new(feed['username']).filter_tweets(feed['include'],feed['reject'])
     items.each do |tweet|
       bd = DateTime.parse($config['birthdate'].to_s)
       d = DateTime.parse(tweet['created_at'])
