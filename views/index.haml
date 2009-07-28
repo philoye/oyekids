@@ -11,4 +11,4 @@
           
       - elsif drop['farm'] # it is a flickr photo
         %li.photo
-          %a{:href => flickr_url(drop) }= flickr_square(drop)
+          %a{:href => photo_path(drop) }= flickr_square(drop)

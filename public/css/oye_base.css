@@ -70,6 +70,30 @@ body {
   color: #777;
   font-size: 13px;
 }
+  .footer a {
+    color: #999 !important;
+    text-decoration: none;
+    border-bottom: 1px solid #666;
+  }
+    .footer ul li a:hover {
+      color: #fff !important;
+      background-color: transparent !important;
+      border-bottom: 1px solid #ccc;
+    }
+  .footer .about {
+    float: left;
+    width: 292px;
+    padding-right: 20px;
+  }
+  .footer .links {
+    float: left;
+    margin-left: 4px;
+    width: 292px;
+    padding-right: 20px;
+  }
+  .footer .links ul {
+    list-style: none;
+  }
 
 
 h1 {
@@ -170,29 +194,22 @@ li img{
     border: 2px solid #ccc;
   }
 
+.photo-details {
+  float: left;
+  width: 632px;
+}
+  .photo-details img {
+    margin: 2px;
+    -ms-interpolation-mode:bicubic;
+  }
+.comments {
+  background-color: #1b1b1b;
+  padding: 5px;
+  float: left;
+  width: 302px;
+  margin: 2px;
+}
 
-
-  .footer a {
-    color: #999;
-  }
-    .footer a:hover {
-      color: #ccc;
-    }
-  .footer .about {
-    float: left;
-    width: 292px;
-    padding-right: 20px;
-  }
-  .footer .links {
-    float: left;
-    margin-left: 4px;
-    width: 292px;
-    padding-right: 20px;
-  }
-  .footer .links ul {
-    list-style: none;
-    
-  }
 
 .felixoye h1, .felixoye a { color: cyan;}
 .jessicaoye h1, .jessicaoye a { color: red;}

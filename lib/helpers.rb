@@ -15,13 +15,14 @@ def flickr_src(photo, size=nil)
   "http://farm#{photo['farm']}.static.flickr.com/#{photo['server']}/#{photo['id']}_#{photo['secret']}#{size && "_#{size}"}.jpg"
 end
 def flickr_url(photo)
-  "http://www.flickr.com/photos/#{photo['ownername']}/#{photo['id']}/"
+  "http://www.flickr.com/photos/#{photo['owner']['username']}/#{photo['id']}/"
 end
 def flickr_square(photo)
   %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo['title']}" />)
 end
 def photo_path(photo)
-  "/photos/#{photo['id']}"
+  user = user_from_nsid(photo['owner'])
+  "/photos/#{user}/#{photo['id']}"
 end
 
 def twitter_url(tweet)
@@ -30,10 +31,28 @@ end
 def format_tweet(text)
   text.linkify.link_mentions.link_hash_tags
 end
+def user_from_nsid(text)
+  users = $config['services']['flickr']['users']
+  username = users.each do |user|
+    if text = user['nsid']
+      username = user['username']
+    end
+    return username
+  end
+end
+def nsid_from_user(text)
+  users = $config['services']['flickr']['users']
+  nsid = users.each do |user|
+    if text = user['username']
+      nsid = user['nsid']
+    end
+    return nsid
+  end
+end
 
 def pretty_date(datetime_string)
   dt = DateTime.parse(datetime_string)
-  dt.strftime("%d %B %y, %I:%m%p")
+  dt.strftime("%d %B %y, %l:%m%p")
 end
 
 def gather_all_photos(feeds)
