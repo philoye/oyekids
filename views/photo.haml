@@ -1,0 +1,13 @@
+.photo-details
+  %a{:href=>flickr_url(@photo)}
+    %img{:src => flickr_src(@photo), :title=>@photo['title']}
+
+.comments
+  %h3 What do you think?
+  %p 
+    %a{:href=>flickr_url(@photo)} Add a comment on Flickr
+  - begin
+    %ol
+    - @comments['comment'].each do |comment|
+      %li= comment["_content"]
+  - rescue

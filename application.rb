@@ -36,8 +36,14 @@ module CrossTheStreams
       @river_by_month = @river.group_by { |drop| drop['age_month'] }
       haml :index
     end
-    get '/photos/:id/?' do
-      
+    get '/photos/:user/?' do
+      redirect '/photos'
+    end
+    get '/photos/:user/:id/?' do
+      nsid = nsid_from_user(params[:user])
+      @photo = Flickr.new(nsid).photo(params[:id])
+      @comments = Flickr.new(nsid).photo_comments(params[:id])
+      haml :photo
     end
 
     get '/tweets/?' do
@@ -45,10 +51,6 @@ module CrossTheStreams
       @river = @river.sort_by { |drop| drop['created'] }.reverse!
       @river_by_month = @river.group_by { |drop| drop['age_month'] }
       haml :index
-    end
-    get '/tweets/:id/?' do
-      allowed_users = $config['services']['twitter']['users']
-      @tweet = Twitter.new(allowed_users[0]['username'], allowed_users[0]['password']).show(params[:id])
     end
 
     not_found do
