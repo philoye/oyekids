@@ -42,6 +42,7 @@ module CrossTheStreams
     get '/photos/:user/:id/?' do
       nsid = nsid_from_user(params[:user])
       @photo = Flickr.new(nsid).photo(params[:id])
+      @sizes = Flickr.new(nsid).photo_sizes(params[:id])
       @comments = Flickr.new(nsid).photo_comments(params[:id])
       haml :photo
     end

@@ -1,13 +1,39 @@
+- photo_size = @sizes.find {|s| s['label'] == "Large"} || @sizes.find {|s| s['label'] == "Original"}
+ 
 .photo-details
   %a{:href=>flickr_url(@photo)}
-    %img{:src => flickr_src(@photo), :title=>@photo['title']}
+    %img{:src => photo_size['source'], :width => "628", :alt => @photo['title'], :title => @photo['title']}/
 
 .comments
+  %h3 About this photo
+  %ul
+    / %li= @photo['media']
+    %li
+      ='"' + @photo['title'] + '"'
+      = "by " +  @photo['owner']['username']
+    - if @photo['description']
+      %li= @photo['description']
+    %li 
+      Taken
+      = pretty_date(@photo['dates']['taken'])
+    / %li
+    /   Posted
+    /   = @photo['dates']['posted']
+    %li= pluralize((@photo['comments']).to_i, "comment")
+    
+    
+
   %h3 What do you think?
   %p 
-    %a{:href=>flickr_url(@photo)} Add a comment on Flickr
+    %a{:href=>flickr_url(@photo)} View and add your comment on Flickr
   - begin
     %ol
     - @comments['comment'].each do |comment|
       %li= comment["_content"]
   - rescue
+ 
+/ %p photo
+/ = @photo.inspect
+/ %p comments
+/ = @comments.inspect
+

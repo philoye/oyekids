@@ -14,15 +14,19 @@ class Flickr
 
   def photos(options={})
     options.merge!({ :method => 'flickr.photos.search', :per_page => '500', :page => '1', :extras => 'date_taken, last_update, date_upload, owner_name, media'})
-    self.class.get_cached('',:query => options)['rsp']['photos']['photo']
+    self.class.get('',:query => options)['rsp']['photos']['photo']
   end
   
   def photo(id)
-    self.class.get_cached('',:query => {:method => 'flickr.photos.getInfo', :photo_id => id})['rsp']['photo']
+    self.class.get('',:query => {:method => 'flickr.photos.getInfo', :photo_id => id})['rsp']['photo']
+  end
+  
+  def photo_sizes(id)
+    self.class.get('',:query => {:method => 'flickr.photos.getSizes', :photo_id => id})['rsp']['sizes']['size']
   end
   
   def photo_comments(id)
-    self.class.get_cached('',:query => {:method => 'flickr.photos.comments.getList', :photo_id => id})['rsp']['comments']
+    self.class.get('',:query => {:method => 'flickr.photos.comments.getList', :photo_id => id})['rsp']
   end
   
 end
