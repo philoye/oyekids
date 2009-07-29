@@ -50,11 +50,6 @@ def nsid_from_user(text)
   end
 end
 
-def pretty_date(datetime_string)
-  dt = DateTime.parse(datetime_string)
-  dt.strftime("%d %B %y, %l:%m%p")
-end
-
 def gather_all_photos(feeds)
   all_items = []
   feeds.each do |feed|
@@ -84,6 +79,9 @@ def gather_all_tweets(feeds)
   all_items
 end
 
+def pretty_date(datetime_string)
+  DateTime.parse(datetime_string).strftime("%d %B %y, %l:%m%p")
+end
 
 class String
   def linkify
@@ -94,5 +92,16 @@ class String
   end
   def link_hash_tags
     gsub(/#([^ ]*)/){ "<a class=\"hash_tag\" href=\"http://twitter.com/#search?q=%23#{$1}\">##{$1}</a>" }
+  end
+end
+
+def pluralize(number, singular)
+  case number.to_i
+  when 0
+    "No #{singular}s"
+  when 1
+    "1 #{singular}"
+  else
+    "#{number} #{singular}s"
   end
 end
