@@ -2,10 +2,18 @@
 
 .grid-container
   %ul.grid
-    - @river_by_month.each do |month,river|
-      %h2
-        %span= month
-        Months
+    - @river_by_month.each do |separator,river|
+      -if $config['group_stream_by'] == "calendar_month"
+        %h2.calendar
+          - d = Date.parse(separator)
+          = d.strftime("%B")
+          %span= d.strftime("%y")
+      -else
+        %h2.age
+          %span= separator
+          Months
+
+
       - river.each do |drop|
         - if drop['text'] # it is a tweet
           %li.tweet
