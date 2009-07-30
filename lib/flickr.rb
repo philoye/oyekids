@@ -26,7 +26,7 @@ class Flickr
   end
   
   def photo_comments(id)
-    self.class.get_cached('',:query => {:user_id=>@nsid, :method => 'flickr.photos.comments.getList', :photo_id => id})['rsp']
+    self.class.get_cached('',:query => {:user_id=>@nsid, :method => 'flickr.photos.comments.getList', :photo_id => id})['rsp']['comments']
   end
   
 end

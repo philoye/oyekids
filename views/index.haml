@@ -1,14 +1,17 @@
-%ul.grid
-  - @river_by_month.each do |month,river|
-    %h2
-      %span= month
-      Months
-    - river.each do |drop|
-      - if drop['text'] # it is a tweet
-        %li.tweet
-          = format_tweet(drop['text']) + "<br>—&nbsp;@" + drop['user']['screen_name'] + ", "
-          %a{:href=> twitter_url(drop)}= pretty_date(drop['created_at'])
+- @title = ""
+
+.grid-container
+  %ul.grid
+    - @river_by_month.each do |month,river|
+      %h2
+        %span= month
+        Months
+      - river.each do |drop|
+        - if drop['text'] # it is a tweet
+          %li.tweet
+            = format_tweet(drop['text']) + "<br>—&nbsp;@" + drop['user']['screen_name'] + ", "
+            %a{:href=> twitter_url(drop)}= pretty_date(drop['created_at'])
           
-      - elsif drop['farm'] # it is a flickr photo
-        %li.photo
-          %a{:href => photo_path(drop) }= flickr_square(drop)
+        - elsif drop['farm'] # it is a flickr photo
+          %li.photo
+            %a{:href => photo_path(drop) }= flickr_square(drop)
