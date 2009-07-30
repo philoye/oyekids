@@ -21,26 +21,17 @@ def flickr_square(photo)
   %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo['title']}">)
 end
 def flickr_embed_code(video,desired_width)
-  info_box = "false"
   width = video['width']
   height = video['height']
   if (desired_width < width)
-    height = desired_width.to_i * height.to_i / width.to_i
+    height = (desired_width.to_i * height.to_i / width.to_i).to_s
     width = desired_width
   end
-  
-  %(<object type="application/x-shockwave-flash" width="#{width}" height="#{height}" data="#{video['source']}"  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="flickr_show_info_box=#{info_box}"></param> <param name="movie" value="#{video['source']}"></param><param name="bgcolor" value="#000000"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="#{video['source']}" bgcolor="#000000" allowfullscreen="true" flashvars="flickr_show_info_box=#{info_box}" height="#{height}" width="#{width}"></embed></object>)
+  %(<object type="application/x-shockwave-flash" width="#{width}" height="#{height}" data="#{video['source']}"  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="flickr_show_info_box=false"></param> <param name="movie" value="#{video['source']}"></param><param name="bgcolor" value="#000000"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="#{video['source']}" bgcolor="#000000" allowfullscreen="true" flashvars="flickr_show_info_box=false" height="#{height}" width="#{width}"></embed></object>)
 end
 def photo_path(photo)
   user = user_from_nsid(photo['owner'])
   "/photos/#{user}/#{photo['id']}"
-end
-
-def twitter_url(tweet)
-  "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id'].to_s
-end
-def format_tweet(text)
-  text.linkify.link_mentions.link_hash_tags
 end
 def user_from_nsid(text)
   users = $config['services']['flickr']['users']
@@ -61,6 +52,13 @@ def nsid_from_user(text)
   end
 end
 
+def twitter_url(tweet)
+  "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id'].to_s
+end
+def format_tweet(text)
+  text.linkify.link_mentions.link_hash_tags
+end
+
 def gather_all_photos(feeds)
   all_items = []
   feeds.each do |feed|
@@ -69,6 +67,7 @@ def gather_all_photos(feeds)
       bd = DateTime.parse($config['birthdate'].to_s)
       d = DateTime.parse(photo['datetaken'])
       photo['age_month']  = ((d - bd) / 30.4).to_i.to_s
+      photo['calendar_month'] = d.strftime("%Y-%m").to_s
       photo['created'] = d
     end
     all_items = items + all_items
@@ -83,6 +82,7 @@ def gather_all_tweets(feeds)
       bd = DateTime.parse($config['birthdate'].to_s)
       d = DateTime.parse(tweet['created_at'])
       tweet['age_month']  = ((d - bd)/30).to_i.to_s
+      tweet['calendar_month'] = d.strftime("%Y-%m").to_s
       tweet['created'] = d
     end
     all_items = items + all_items

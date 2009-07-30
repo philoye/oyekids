@@ -163,20 +163,26 @@ h2 {
   padding: 5px;
   margin: 2px;
   text-transform: uppercase;
-  font-size: 10px;
   font-weight: bold;
   background-color: #1b1b1b;
   color: #666;
   text-align: center;
   letter-spacing: 1px;
+  font-size: 10px;
 }
+  h2.calendar {
+    line-height: 15px;
+  }
+
   h2 span {
     display: block;
-    font-size: 48px;
     font-weight: bold;
-    line-height: 48px;
     letter-spacing: -1px;
+    font-size: 48px;
+    line-height: 48px;
   }
+    h2.calendar span {
+    }
 
   .grid-container {
     background: url('../images/bg-grid.gif') repeat;
