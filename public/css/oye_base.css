@@ -203,11 +203,11 @@ h2 {
       color: #999;
       background-color: #1b1b1b;
       font-size: 12px;
-      line-height: 15px;
+      line-height: 16px;
       margin: 2px;
       height: 65px;
-      padding: 5px;
-      width: 302px;
+      padding: 5px 10px;
+      width: 292px;
     }
       li.tweet a {
         color: #999;
