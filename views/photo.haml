@@ -1,41 +1,47 @@
-- photo_size = @sizes.find {|s| s['label'] == "Large"} || @sizes.find {|s| s['label'] == "Original"}
- 
-.photo-details
-- if @photo['media'] == "photo"
-  %a{:href=>flickr_url(@photo)}
-    %img{:src => photo_size['source'], :width => "628", :alt => @photo['title'], :title => @photo['title']}/
-/ - elsif @photo['media'] == "video"
-/   = flick_embed_code()
-.comments
-  %ul
-    / %li= @photo['media']
-    %li
-      ='"' + @photo['title'] + '"'
-      = "by " +  @photo['owner']['username']
-    - if @photo['description']
-      %li= @photo['description']
-    %li 
-      Taken
-      = pretty_date(@photo['dates']['taken'])
-    / %li
-    /   Posted
-    /   = @photo['dates']['posted']
-    / %li= pluralize((@photo['comments']).to_i, "comment")
-    
-    
+- @title = "“" + @photo['title'] + "”, a photo of "
 
-  %h3 What do you think?
-  %p 
-    %a{:href=>flickr_url(@photo)} View and add your comment on Flickr
-  - begin
-    %ol
-    - @comments['comment'].each do |comment|
-      %li= comment["_content"]
-  - rescue
+- photo_size = @sizes.find {|s| s['label'] == "Large"} || @sizes.find {|s| s['label'] == "Original"}
+
+.photo-container
+  .photo-details
+    - if @photo['media'] == "photo"
+      %a{:href=>flickr_url(@photo)}
+        %img{:src => photo_size['source'], :width => "628", :alt => @photo['title'], :title => @photo['title']}/
+    / - elsif @photo['media'] == "video"
+    /   = flick_embed_code()
+
+  .photo-info-container
+    .photo-meta
+      %ul
+        %li= '“' + @photo['title'] + '”'
+        %li= "by " +  @photo['owner']['realname']
+        - if @photo['description']
+          %li.description= @photo['description']
+        %li 
+          Taken on
+          = pretty_date(@photo['dates']['taken'])
+        / %li
+        /   Posted
+        /   = @photo['dates']['posted']
+
+    .photo-comments
+      %p
+        %strong
+          = pluralize((@photo['comments']).to_i, "comment")
+          so far
+      - begin
+        %ol
+        - @comments['comment'].each do |comment|
+          %li= comment
+      - rescue
+
+      %p 
+        %a{:href=>flickr_url(@photo)} Add your comment on Flickr
+
  
-/ %p photo
-/ = @photo.inspect
-/ %p comments
-/ = @comments.inspect
-/ = @sizes.inspect
+    / %p photo
+    / = @photo.inspect
+    / %p comments
+    / = @comments.inspect
+    / = @sizes.inspect
 

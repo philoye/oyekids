@@ -36,9 +36,8 @@ a img { border: none; }
 
 
 
-/* -------------------------------------------------------------- 
-  My stuff
--------------------------------------------------------------- */
+
+/* General */
 
 body {
   font-family: "helvetica";
@@ -46,10 +45,18 @@ body {
   color: #ddd;
   margin: 23px;
 }
+img {
+  display: block;
+}
+br {
+  clear: both;
+}
 
+
+
+/* Layout */
 .container {
   width: 948px;
-  
 }
 .header {
   height: 75px;
@@ -58,7 +65,6 @@ body {
 .content {
   clear: both;
   overflow: auto;
-  background: url('../images/bg-grid.gif') repeat;
 }
 .footer {
   clear: both;
@@ -70,39 +76,44 @@ body {
   color: #777;
   font-size: 13px;
 }
-  .footer a {
-    color: #999 !important;
-    text-decoration: none;
-    border-bottom: 1px solid #666;
-  }
-    .footer ul li a:hover {
-      color: #fff !important;
-      background-color: transparent !important;
-      border-bottom: 1px solid #ccc;
-    }
-  .footer .about {
-    float: left;
-    width: 292px;
-    padding-right: 20px;
-  }
-  .footer .links {
-    float: left;
-    margin-left: 4px;
-    width: 292px;
-    padding-right: 20px;
-  }
-  .footer .links ul {
-    list-style: none;
-  }
 
+/* Footer typography */
+
+.footer a {
+  color: #999 !important;
+  text-decoration: none;
+  border-bottom: 1px solid #666;
+}
+  .footer ul li a:hover {
+    color: #fff !important;
+    background-color: transparent !important;
+    border-bottom: 1px solid #ccc;
+  }
+.footer .about {
+  float: left;
+  width: 292px;
+  padding-right: 20px;
+}
+.footer .links {
+  float: left;
+  margin-left: 4px;
+  width: 292px;
+  padding-right: 20px;
+}
+.footer .links ul {
+  list-style: none;
+}
+
+
+/* Header typography */
 
 h1 {
   color: #ccc;
+  float: left;
   font-size: 48px;
   font-weight: bold;
-  margin: 2px;
-  float: left;
   height: 75px;
+  margin: 2px;
   padding-left: 5px;
   width: 540px;
 }
@@ -113,6 +124,25 @@ h1 {
     float: left;
   }
 
+ul.navigation li {
+  float: left;
+  font-size: 10px;
+  font-weight: bold;
+  list-style: none;
+  text-transform: uppercase;
+}
+  ul.navigation li a {
+    height: 65px;
+    margin: 2px;
+    padding: 5px;
+    width: 65px;
+    display: block;
+    background-color: #333;
+    text-decoration: none;
+  }
+
+
+/* grid styles */
 
 h2 {
   float: left;
@@ -136,86 +166,88 @@ h2 {
     letter-spacing: -1px;
   }
 
+  .grid-container {
+    background: url('../images/bg-grid.gif') repeat;
+    overflow: auto;
+  }
 
-
-
-ul.navigation {
-  background-color: #222;
-}
-  ul.navigation li {
+  ul.grid li {
     list-style: none;
     float: left;
-    text-transform: uppercase;
-    font-size: 10px;
-    font-weight: bold;
   }
-    ul.navigation li a {
-      height: 65px;
-      margin: 2px;
-      padding: 5px;
-      width: 65px;
-      display: block;
-      background-color: #333;
-      text-decoration: none;
+
+
+    ul.grid li img{
+      border: 2px solid #222;
     }
-      ul.navigation li a:hover {
-        color: #222;
-        background-color: #ccc;
-        border: 0;
+    ul.grid li a:hover img {
+      border: 2px solid #ccc;
+    }
+
+    li.tweet {
+      color: #999;
+      background-color: #1b1b1b;
+      font-size: 12px;
+      line-height: 15px;
+      margin: 2px;
+      height: 65px;
+      padding: 5px;
+      width: 302px;
+    }
+      li.tweet a {
+        color: #999;
+        border-bottom: 1px solid #666;
+        text-decoration: none;
+      }
+      li.tweet a:hover {
+        color: #fff;
+        border-bottom: 1px solid #ccc;
         text-decoration: none;
       }
 
+  
+/* Photo details page */
 
-ul.grid li {
-  list-style: none;
-  float: left;
+.photo-container {
+  background-color: #1b1b1b;
+  overflow: auto;
 }
-  li.tweet {
-    color: #999;
-    background-color: #1b1b1b;
-    font-size: 12px;
-    line-height: 15px;
-    margin: 2px;
-    height: 65px;
-    padding: 5px;
-    width: 302px;
-  }
-    li.tweet a {
-      color: #999;
-      border-bottom: 1px solid #666;
-      text-decoration: none;
-    }
-    li.tweet a:hover {
-      color: #fff;
-      border-bottom: 1px solid #ccc;
-      text-decoration: none;
-    }
-
-img {
-  display: block;
-}
-li img{
-  border: 2px solid #222;
-}
-  li.photo a:hover img {
-    border: 2px solid #ccc;
-  }
-
 .photo-details {
   float: left;
   width: 632px;
 }
-  .photo-details img {
-    margin: 2px;
+  .photo-details a img {
+    border: 2px solid transparent;
     -ms-interpolation-mode:bicubic;
   }
-.comments {
-  padding: 5px;
+    .photo-details a:hover img {
+      border: 2px solid #ccc;
+    }
+
+.photo-info-container {
   float: left;
-  width: 302px;
-  margin: 2px;
+  width: 282px;
+  padding: 10px 15px;
+  font-size: 14px;
+}
+.photo-meta {
+  
+}
+.photo-meta ul {
+  list-style: none;
+}
+.photo-meta li.description {
+  padding: 24px 0;
 }
 
+.photo-comments {
+  margin-top: 24px;
+}
+  .photo-comments ol {
+  }
+
+
+/* site specific style */
 
 .felixoye h1 { color: cyan;}
 .jessicaoye h1 { color: red;}
@@ -236,8 +268,4 @@ li img{
 .jessicaoye a:hover img { border-color: red !important; }
 .simonoye a:hover img { border-color: #00dbff !important; }
 .oyekids a:hover img { background-color: #bf0 !important; }
-
-br {
-  clear: both;
-}
 
