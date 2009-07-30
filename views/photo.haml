@@ -7,8 +7,9 @@
     - if @photo['media'] == "photo"
       %a{:href=>flickr_url(@photo)}
         %img{:src => photo_size['source'], :width => "628", :alt => @photo['title'], :title => @photo['title']}/
-    / - elsif @photo['media'] == "video"
-    /   = flick_embed_code()
+    - elsif @photo['media'] == "video"
+      - video= @sizes.find {|s| s['label'] == "Video Player"}
+      = flickr_embed_code(video,"628")
 
   .photo-info-container
     .photo-meta
@@ -39,9 +40,8 @@
         %a{:href=>flickr_url(@photo)} Add your comment on Flickr
 
  
-    / %p photo
-    / = @photo.inspect
-    / %p comments
-    / = @comments.inspect
-    / = @sizes.inspect
+%p photo
+= @photo.inspect
+%p sizes
+= @sizes.inspect
 
