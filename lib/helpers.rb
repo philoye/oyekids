@@ -20,8 +20,9 @@ end
 def flickr_square(photo)
   %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo['title']}">)
 end
-def flickr_embed_code(video_url,desired_width,width="400",height="300",info_box="true")
-  %w(<object type="application/x-shockwave-flash" width="#{width}" height="#{height}" data="#{video_url}"  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="flickr_show_info_box=#{info_box}"></param> <param name="movie" value="#{video_url}"></param><param name="bgcolor" value="#000000"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="#{video_url}" bgcolor="#000000" allowfullscreen="true" flashvars="flickr_show_info_box=#{info_box}" height="#{height}" width="#{width}"></embed></object>)
+def flickr_embed_code(video,desired_width)
+  info_box = "true"
+  %w(<object type="application/x-shockwave-flash" width="#{video['width']}" height="#{video['height']}" data="#{video['url']}"  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="flickr_show_info_box=#{info_box}"></param> <param name="movie" value="#{video['url']}"></param><param name="bgcolor" value="#000000"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="#{video['url']}" bgcolor="#000000" allowfullscreen="true" flashvars="flickr_show_info_box=#{info_box}" height="#{video['height']}" width="#{video['width']}"></embed></object>)
 end
 def photo_path(photo)
   user = user_from_nsid(photo['owner'])
