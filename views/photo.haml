@@ -1,11 +1,12 @@
 - photo_size = @sizes.find {|s| s['label'] == "Large"} || @sizes.find {|s| s['label'] == "Original"}
  
 .photo-details
+- if @photo['media'] == "photo"
   %a{:href=>flickr_url(@photo)}
     %img{:src => photo_size['source'], :width => "628", :alt => @photo['title'], :title => @photo['title']}/
-
+/ - elsif @photo['media'] == "video"
+/   = flick_embed_code()
 .comments
-  %h3 About this photo
   %ul
     / %li= @photo['media']
     %li
@@ -19,7 +20,7 @@
     / %li
     /   Posted
     /   = @photo['dates']['posted']
-    %li= pluralize((@photo['comments']).to_i, "comment")
+    / %li= pluralize((@photo['comments']).to_i, "comment")
     
     
 
@@ -36,4 +37,5 @@
 / = @photo.inspect
 / %p comments
 / = @comments.inspect
+/ = @sizes.inspect
 

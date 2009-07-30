@@ -15,6 +15,7 @@ module CrossTheStreams
       set :views, File.join(File.dirname(__FILE__),'views')
       set :static, true
       set :siteslug, $config['siteslug']
+      set :sitename, $config['name']
 
       Dir.glob('lib/*.rb') do |filename|
         require filename

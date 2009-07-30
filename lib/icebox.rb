@@ -40,14 +40,17 @@ module Icebox
     # FIXME : Cache ONLY IF response.code == 200
     # FIXME : Response headers are lost when cached
     def get_cached(path, options={})
-      if cache.exists?(path) and not cache.stale?(path)
+      path_plus_options = path
+      path_plus_options += options.to_s unless options.nil?
+      
+      if cache.exists?(path_plus_options) and not cache.stale?(path_plus_options)
         LOGGER.debug "Getting data from cache"
-        value = cache.get(path)
+        value = cache.get(path_plus_options)
         return HTTParty::Response.new(value, value, 200, {})
       else
         LOGGER.debug "Getting data from network"
         value = get(path, options)
-        cache.set(path, value)
+        cache.set(path_plus_options, value)
         # FIXME : Getting a String here no matter what we do...
         # value = HTTParty::Request.new(Net::HTTP::Get, base_uri + path, options).perform
         # puts value.class
