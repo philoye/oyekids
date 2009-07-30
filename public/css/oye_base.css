@@ -107,6 +107,19 @@ br {
 
 /* Header typography */
 
+.avatar {
+  float: left;
+  position: relative;
+  left: -2px;
+  top: -2px;
+}
+.avatar img {
+  border: 2px solid transparent !important;
+}
+.avatar a:hover img {
+  border-color: red !important;
+}
+
 h1 {
   color: #ccc;
   float: left;
@@ -117,12 +130,14 @@ h1 {
   padding-left: 5px;
   width: 540px;
 }
+  h1 a {
+    text-decoration: none;
+  }
   h1 span {
     font-weight: normal;
   }
-  h1 div.icon {
-    float: left;
-  }
+
+
 
 ul.navigation li {
   float: left;
