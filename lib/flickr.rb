@@ -8,13 +8,18 @@ class Flickr
   base_uri 'http://api.flickr.com/services/rest'
   default_params :api_key => $config['services']['flickr']['api_key'], :output => 'json'
 
-  def initialize(nsid)
+  def initialize(nsid,cache=true)
     @nsid = nsid
+    @cache = cache
   end
 
   def photos(options={})
     options.merge!({ :user_id => @nsid, :method => 'flickr.photos.search', :per_page => '500', :page => '1', :extras => 'date_taken, last_update, date_upload, owner_name, media'})
-    self.class.get_cached('',:query => options)['rsp']['photos']['photo']
+    if @cache
+      self.class.get_cached('',:query => options)['rsp']['photos']['photo']
+    else
+      self.class.get('',:query => options)['rsp']['photos']['photo']
+    end
   end
   
   def photo(id)

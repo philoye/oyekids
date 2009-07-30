@@ -59,13 +59,13 @@ def format_tweet(text)
   text.linkify.link_mentions.link_hash_tags
 end
 
-def gather_all_photos(feeds)
+def gather_all_photos(feeds,cache=true)
   all_items = []
   feeds.each do |feed|
-    items = Flickr.new(feed['nsid']).photos(:tags => feed['tags'])
+    items = Flickr.new(feed['nsid'],cache).photos(:tags => feed['tags'])
     items.each do |photo|
       bd = DateTime.parse($config['birthdate'].to_s)
-      d = DateTime.parse(photo['datetaken'])
+      d  = DateTime.parse(photo['datetaken'])
       photo['age_month']  = ((d - bd) / 30.4).to_i.to_s
       photo['calendar_month'] = d.strftime("%Y-%m").to_s
       photo['created'] = d
@@ -74,10 +74,10 @@ def gather_all_photos(feeds)
   end
   all_items
 end
-def gather_all_tweets(feeds)
+def gather_all_tweets(feeds,cache=true)
   all_items = []
   feeds.each do |feed|
-    items = Twitter.new(feed['username']).filter_tweets(feed['include'],feed['reject'])
+    items = Twitter.new(feed['username'],cache).filter_tweets(feed['include'],feed['reject'])
     items.each do |tweet|
       bd = DateTime.parse($config['birthdate'].to_s)
       d = DateTime.parse(tweet['created_at'])

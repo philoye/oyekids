@@ -30,7 +30,7 @@ module Icebox
     # [timeout]     Cache expiration in seconds
     def cache(options={})
       options[:store]   ||= 'memory'
-      options[:timeout] ||= 900
+      options[:timeout] ||= 86400
       @@cache ||= Cache.new( const_get("#{options.delete(:store).capitalize}Store").new(options) )
     end
 

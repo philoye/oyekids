@@ -7,22 +7,17 @@ class Twitter
   include Icebox
   base_uri 'twitter.com'
 
-  def initialize(u)
+  def initialize(u,cache=true)
     @user = u
-  end
-    
-  def show(id)
-    tweet = self.class.get_cached("/statuses/show/#{id}.json")
-    users = $config['services']['twitter']['users']
-    whitelist = []
-    users.each do |user|
-      whitelist << user['username']
-    end
-    if whitelist.include? tweet['user']['screen_name'] then tweet end
+    @cache = cache
   end
     
   def timeline(username=:username, options={})
-    self.class.get_cached("/statuses/user_timeline/#{@user}.json", options)
+    if @cache
+      self.class.get_cached("/statuses/user_timeline/#{@user}.json", options)
+    else
+      self.class.get("/statuses/user_timeline/#{@user}.json", options)
+    end
   end
 
   def filter_tweets(whitelist,blacklist)
@@ -41,5 +36,16 @@ class Twitter
     end
     return t
   end
+  
+  def show(id)
+    tweet = self.class.get_cached("/statuses/show/#{id}.json")
+    users = $config['services']['twitter']['users']
+    whitelist = []
+    users.each do |user|
+      whitelist << user['username']
+    end
+    if whitelist.include? tweet['user']['screen_name'] then tweet end
+  end
+    
   
 end
