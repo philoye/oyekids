@@ -264,20 +264,20 @@ h2 {
 .felixoye h1 { color: #9be302;}
 .jessicaoye h1 { color: #ff0066;}
 .simonoye h1 { color: #00dbff;}
-.oyekids h1 { color: #ffa518;}
+.oyekids h1 { color: #ffb006;}
 
 .felixoye a { color:#9be302; }
 .jessicaoye a { color:#ff0066; }
 .simonoye a   { color:#00dbff; }
-.oyekids a   { color:#ffa518; }
+.oyekids a   { color:#ffb006; }
 
 .felixoye .grid.navigation a:hover { color:#222; background-color: #9be302 !important; }
 .jessicaoye .grid.navigation a:hover { color:#222; background-color: #ff0066 !important; }
 .simonoye .grid.navigation a:hover   { color:#222; background-color: #00dbff !important; }
-.oyekids .grid.navigation a:hover   { color:#222; background-color: #ffa518 !important; }
+.oyekids .grid.navigation a:hover   { color:#222; background-color: #ffb006 !important; }
 
 .felixoye a:hover img { border-color: #9be302 !important; }
 .jessicaoye a:hover img { border-color: #ff0066 !important; }
 .simonoye a:hover img { border-color: #00dbff !important; }
-.oyekids a:hover img { border-color: #ffa518 !important; }
+.oyekids a:hover img { border-color: #ffb006 !important; }
 
