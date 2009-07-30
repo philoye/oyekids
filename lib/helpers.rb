@@ -18,7 +18,10 @@ def flickr_url(photo)
   "http://www.flickr.com/photos/#{photo['owner']['username']}/#{photo['id']}/"
 end
 def flickr_square(photo)
-  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo['title']}" />)
+  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo['title']}">)
+end
+def flickr_embed_code(video_url,desired_width,width="400",height="300",info_box="true")
+  %w(<object type="application/x-shockwave-flash" width="#{width}" height="#{height}" data="#{video_url}"  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="flickr_show_info_box=#{info_box}"></param> <param name="movie" value="#{video_url}"></param><param name="bgcolor" value="#000000"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="#{video_url}" bgcolor="#000000" allowfullscreen="true" flashvars="flickr_show_info_box=#{info_box}" height="#{height}" width="#{width}"></embed></object>)
 end
 def photo_path(photo)
   user = user_from_nsid(photo['owner'])
@@ -80,7 +83,7 @@ def gather_all_tweets(feeds)
 end
 
 def pretty_date(datetime_string)
-  DateTime.parse(datetime_string).strftime("%d %B %y, %l:%m%p")
+  DateTime.parse(datetime_string).strftime("%e %B %y, %l:%m%p")
 end
 
 class String
@@ -92,6 +95,11 @@ class String
   end
   def link_hash_tags
     gsub(/#([^ ]*)/){ "<a class=\"hash_tag\" href=\"http://twitter.com/#search?q=%23#{$1}\">##{$1}</a>" }
+  end
+  def slugify
+    self.downcase.gsub(/'/, '').gsub(/[^a-z0-9]+/, '-') do |slug|
+      slug.chop! if slug.last == '-'
+    end
   end
 end
 
