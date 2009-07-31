@@ -1,9 +1,9 @@
 .header
   .avatar
     %a{:href=>"/"}
-      %img{:src => $config['avatar'], :width => "75", :height =>"75" }
+      %img{:src => @avatar, :width => "75", :height =>"75" }
   %h1
-    %a{:href=>"/"}= $config['name']
+    %a{:href=>"/"}= @site_name
 
   %ul.grid.navigation
     %li

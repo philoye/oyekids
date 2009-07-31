@@ -34,8 +34,7 @@ def photo_path(photo)
   "/photos/#{user}/#{photo['id']}"
 end
 def user_from_nsid(text)
-  users = $config['services']['flickr']['users']
-  username = users.each do |user|
+  username = @flickr_feeds.each do |user|
     if text = user['nsid']
       username = user['username']
     end
@@ -43,8 +42,7 @@ def user_from_nsid(text)
   end
 end
 def nsid_from_user(text)
-  users = $config['services']['flickr']['users']
-  nsid = users.each do |user|
+  nsid = @flickr_feeds.each do |user|
     if text = user['username']
       nsid = user['nsid']
     end
@@ -61,16 +59,15 @@ end
 
 def sort_and_group(array_of_items)
   river = array_of_items.sort_by { |drop| drop['created'] }.reverse!
-  return river.group_by { |drop| drop[$config['group_stream_by']] }
+  return river.group_by { |drop| drop[@group_stream_by] }
 end
 
 def gather_all_photos(cache=true)
-  feeds = $config['services']['flickr']['users']
   all_items = []
-  feeds.each do |feed|
+  @flickr_feeds.each do |feed|
     items = Flickr.new(feed['nsid'],cache).photos(:tags => feed['tags'])
     items.each do |photo|
-      bd = DateTime.parse($config['birthdate'].to_s)
+      bd = DateTime.parse(@birthdate.to_s)
       d  = DateTime.parse(photo['datetaken'])
       photo['age_month']  = ((d - bd) / 30.4).to_i.to_s
       photo['calendar_month'] = d.strftime("%Y-%m").to_s
@@ -81,12 +78,13 @@ def gather_all_photos(cache=true)
   all_items
 end
 def gather_all_tweets(cache=true)
-  feeds = $config['services']['twitter']['users']
   all_items = []
-  feeds.each do |feed|
+  @twitter_feeds.each do |feed|
     items = Twitter.new(feed['username'],cache).filter_tweets(feed['include'],feed['exclude'])
+    p items[0..5]
+
     items.each do |tweet|
-      bd = DateTime.parse($config['birthdate'].to_s)
+      bd = DateTime.parse(@birthdate.to_s)
       d = DateTime.parse(tweet['created_at'])
       tweet['age_month']  = ((d - bd)/30).to_i.to_s
       tweet['calendar_month'] = d.strftime("%Y-%m").to_s

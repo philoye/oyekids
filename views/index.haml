@@ -3,7 +3,7 @@
 .grid-container
   %ul.grid
     - @river.each do |separator,items|
-      -if $config['group_stream_by'] == "calendar_month"
+      -if @group_stream_by == "calendar_month"
         %h2.calendar
           - d = Date.parse(separator)
           = d.strftime("%B")

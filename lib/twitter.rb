@@ -12,7 +12,7 @@ class Twitter
     @cache = cache
   end
     
-  def timeline(username=:username, options={})
+  def timeline(user=:username, options={})
     options.merge!({ :count => "200" })
     if @cache
       self.class.get_cached("/statuses/user_timeline/#{@user}.json", :query => options)
@@ -37,14 +37,4 @@ class Twitter
     return t
   end
   
-  def show(id)
-    tweet = self.class.get_cached("/statuses/show/#{id}.json")
-    users = $config['services']['twitter']['users']
-    whitelist = []
-    users.each do |user|
-      whitelist << user['username']
-    end
-    if whitelist.include? tweet['user']['screen_name'] then tweet end
-  end
-    
 end
