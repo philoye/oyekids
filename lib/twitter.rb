@@ -13,10 +13,11 @@ class Twitter
   end
     
   def timeline(username=:username, options={})
+    options.merge!({ :count => "200" })
     if @cache
-      self.class.get_cached("/statuses/user_timeline/#{@user}.json", options)
+      self.class.get_cached("/statuses/user_timeline/#{@user}.json", :query => options)
     else
-      self.class.get("/statuses/user_timeline/#{@user}.json", options)
+      self.class.get("/statuses/user_timeline/#{@user}.json", :query => options)
     end
   end
 
@@ -25,13 +26,12 @@ class Twitter
     # t = timeline.reject { |tweet| tweet['text'][0] == 64 } # Filter out replies
     if whitelist
       t.reject! do |tweet|
-        isuck = tweet['text'].downcase.include? whitelist
-        !isuck
+        !(tweet['text'].downcase.include? whitelist.downcase)
       end
     end
     if blacklist
       t.reject! do |tweet|
-        !(tweet['text'].downcase.include? blacklist)
+        (tweet['text'].downcase.include? blacklist.downcase)
       end
     end
     return t

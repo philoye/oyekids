@@ -84,7 +84,7 @@ def gather_all_tweets(cache=true)
   feeds = $config['services']['twitter']['users']
   all_items = []
   feeds.each do |feed|
-    items = Twitter.new(feed['username'],cache).filter_tweets(feed['include'],feed['reject'])
+    items = Twitter.new(feed['username'],cache).filter_tweets(feed['include'],feed['exclude'])
     items.each do |tweet|
       bd = DateTime.parse($config['birthdate'].to_s)
       d = DateTime.parse(tweet['created_at'])
