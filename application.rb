@@ -36,7 +36,7 @@ module CrossTheStreams
     end
 
     get '/' do 
-      tweets = gather_all_tweets()
+      tweets = gather_all_tweets(false)
       photos = gather_all_photos()
       @river = sort_and_group(tweets + photos)
       haml :index
@@ -47,7 +47,7 @@ module CrossTheStreams
       "Success"
     end
     get '/tweets/?' do
-      @river = sort_and_group(gather_all_tweets())
+      @river = sort_and_group(gather_all_tweets(false))
       haml :index
     end
     get '/photos/?' do

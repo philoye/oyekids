@@ -20,5 +20,4 @@ class Twitter
       self.class.get("/statuses/user_timeline/#{@user}.json", :query => options)
     end
   end
-
 end

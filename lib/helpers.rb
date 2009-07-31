@@ -71,7 +71,7 @@ def gather_all_photos(cache=true)
     end
     all_items = items + all_items
   end
-  all_items
+  return all_items
 end
 def gather_all_tweets(cache=true)
   all_items = []
