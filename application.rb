@@ -25,7 +25,7 @@ module CrossTheStreams
     get '/' do 
       tweets = gather_all_tweets()
       photos = gather_all_photos()
-      @grouped_river = sort_and_group(tweets + photos)
+      @river = sort_and_group(tweets + photos)
       haml :index
     end
     get '/refresh' do # hit this to bust the cache and refresh all apis.
@@ -34,11 +34,11 @@ module CrossTheStreams
       "Success"
     end
     get '/tweets/?' do
-      @grouped_river = sort_and_group(gather_all_tweets())
+      @river = sort_and_group(gather_all_tweets())
       haml :index
     end
     get '/photos/?' do
-      @grouped_river = sort_and_group(gather_all_photos())
+      @river = sort_and_group(gather_all_photos())
       haml :index
     end
 
