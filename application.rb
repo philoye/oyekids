@@ -33,7 +33,6 @@ module CrossTheStreams
       @group_stream_by = config['group_stream_by']
       @twitter_feeds   = config['services']['twitter']['users']
       @flickr_feeds    = config['services']['flickr']['users']
-      @flickr_api_key  = config['services']['flickr']['api_key']
     end
 
     get '/' do 
