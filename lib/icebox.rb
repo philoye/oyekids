@@ -40,9 +40,7 @@ module Icebox
     # FIXME : Cache ONLY IF response.code == 200
     # FIXME : Response headers are lost when cached
     def get_cached(path, options={})
-      path_plus_options = path
-      path_plus_options += options.to_s unless options.nil?
-      
+      path_plus_options = path + (options.to_s unless options.nil?)
       if cache.exists?(path_plus_options) and not cache.stale?(path_plus_options)
         LOGGER.debug "Getting data from cache"
         value = cache.get(path_plus_options)
