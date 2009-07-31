@@ -7,13 +7,13 @@ class Twitter
   include Icebox
   base_uri 'twitter.com'
 
-  def initialize(u,cache=true)
-    @user = u
+  def initialize(user,cache=true)
+    @user = user
     @cache = cache
   end
     
   def timeline(user=:username, options={})
-    options.merge!({ :count => "200" })
+    options.merge!({ :count => "20" })
     if @cache
       self.class.get_cached("/statuses/user_timeline/#{@user}.json", :query => options)
     else

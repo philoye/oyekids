@@ -66,12 +66,8 @@ def gather_all_photos(cache=true)
   all_items = []
   @flickr_feeds.each do |feed|
     items = Flickr.new(feed['nsid'],cache).photos(:tags => feed['tags'])
-    items.each do |photo|
-      bd = DateTime.parse(@birthdate.to_s)
-      d  = DateTime.parse(photo['datetaken'])
-      photo['age_month']  = ((d - bd) / 30.4).to_i.to_s
-      photo['calendar_month'] = d.strftime("%Y-%m").to_s
-      photo['created'] = d
+    items.each do |item|
+      harmonize_stream(item,"datetaken")
     end
     all_items = items + all_items
   end
@@ -82,16 +78,20 @@ def gather_all_tweets(cache=true)
   @twitter_feeds.each do |feed|
     items = Twitter.new(feed['username'],cache).timeline
     items = filter_tweets(items,feed['include'],feed['exclude'])
-    items.each do |tweet|
-      bd = DateTime.parse(@birthdate.to_s)
-      d = DateTime.parse(tweet['created_at'])
-      tweet['age_month']  = ((d - bd)/30.4).to_i.to_s
-      tweet['calendar_month'] = d.strftime("%Y-%m").to_s
-      tweet['created'] = d
+    items.each do |item|
+      harmonize_stream(item,"created_at")
     end
     all_items = items + all_items
   end
-  all_items
+  return all_items
+end
+def harmonize_stream(item,attribute)
+  bd = DateTime.parse(@birthdate.to_s)
+  d  = DateTime.parse(item[attribute])
+  item['age_month']  = ((d - bd) / 30.4).to_i.to_s
+  item['calendar_month'] = d.strftime("%Y-%m").to_s
+  item['created'] = d
+  return item
 end
 def filter_tweets(tweets,whitelist,blacklist)
   if whitelist
