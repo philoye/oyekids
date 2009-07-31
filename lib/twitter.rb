@@ -21,20 +21,4 @@ class Twitter
     end
   end
 
-  def filter_tweets(whitelist,blacklist)
-    t = timeline
-    # t = timeline.reject { |tweet| tweet['text'][0] == 64 } # Filter out replies
-    if whitelist
-      t.reject! do |tweet|
-        !(tweet['text'].downcase.include? whitelist.downcase)
-      end
-    end
-    if blacklist
-      t.reject! do |tweet|
-        (tweet['text'].downcase.include? blacklist.downcase)
-      end
-    end
-    return t
-  end
-  
 end

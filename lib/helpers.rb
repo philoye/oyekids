@@ -80,19 +80,31 @@ end
 def gather_all_tweets(cache=true)
   all_items = []
   @twitter_feeds.each do |feed|
-    items = Twitter.new(feed['username'],cache).filter_tweets(feed['include'],feed['exclude'])
-    p items[0..5]
-
+    items = Twitter.new(feed['username'],cache).timeline
+    items = filter_tweets(items,feed['include'],feed['exclude'])
     items.each do |tweet|
       bd = DateTime.parse(@birthdate.to_s)
       d = DateTime.parse(tweet['created_at'])
-      tweet['age_month']  = ((d - bd)/30).to_i.to_s
+      tweet['age_month']  = ((d - bd)/30.4).to_i.to_s
       tweet['calendar_month'] = d.strftime("%Y-%m").to_s
       tweet['created'] = d
     end
     all_items = items + all_items
   end
   all_items
+end
+def filter_tweets(tweets,whitelist,blacklist)
+  if whitelist
+    tweets.reject! do |tweet|
+      !(tweet['text'].downcase.include? whitelist.downcase)
+    end
+  end
+  if blacklist
+    tweets.reject! do |tweet|
+      (tweet['text'].downcase.include? blacklist.downcase)
+    end
+  end
+  return tweets
 end
 
 def pretty_date(datetime_string)
