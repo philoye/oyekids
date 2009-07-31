@@ -85,14 +85,6 @@ def gather_all_tweets(cache=true)
   end
   return all_items
 end
-def harmonize_stream(item,attribute)
-  bd = DateTime.parse(@birthdate.to_s)
-  d  = DateTime.parse(item[attribute])
-  item['age_month']  = ((d - bd) / 30.4).to_i.to_s
-  item['calendar_month'] = d.strftime("%Y-%m").to_s
-  item['created'] = d
-  return item
-end
 def filter_tweets(tweets,whitelist,blacklist)
   if whitelist
     tweets.reject! do |tweet|
@@ -105,6 +97,14 @@ def filter_tweets(tweets,whitelist,blacklist)
     end
   end
   return tweets
+end
+def harmonize_stream(item,attribute)
+  bd = DateTime.parse(@birthdate.to_s)
+  d  = DateTime.parse(item[attribute])
+  item['age_month']  = ((d - bd) / 30.4).to_i.to_s
+  item['calendar_month'] = d.strftime("%Y-%m").to_s
+  item['created'] = d
+  return item
 end
 
 def pretty_date(datetime_string)
