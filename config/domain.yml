@@ -1,0 +1,23 @@
+name: Site Name
+siteslug: sitename
+about_text: "Some about text here"
+avatar: "url to a flickr thumbnail"
+group_stream_by: "calendar_month" # or "age_month"
+birthdate: "" #only needed with group by "age_month" if used, in which case should be in YYYY-MM-DD format
+services:
+  flickr:
+    users: #whitelist of flickr feeds to check
+      - nsid:     flickr_nsid
+        username: flickr_screename
+        tags:     "tag, tag2"
+      - nsid:     flickr_nsid 2
+        username: flickr_screename_2
+        tags:     "tag3, tag4"
+  twitter:
+    users: #whitelist of twitter users to check
+      - username: twitter_username
+        include:  "required text"
+        exclude:  "text to ignore"
+      - username: twitter_username
+        include:  "required text"
+        exclude:  "text to ignore"

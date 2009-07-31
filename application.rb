@@ -9,21 +9,34 @@ module CrossTheStreams
 
     configure do
       $config = YAML.load_file('config/application.yml')
+      $flickr_api_key = $config['flickr_api_key']
 
       set :haml, {:format => :html4}
       set :public, File.join(File.dirname(__FILE__),'public')
       set :views, File.join(File.dirname(__FILE__),'views')
       set :static, true
-      set :siteslug, $config['siteslug']
-      set :sitename, $config['name']
 
       Dir.glob('lib/*.rb') do |filename|
         require filename
       end
     end
 
+    before do
+      domain_root = Rack::Request.new(env).host.split('.')[0]
+      config = YAML.load_file("config/#{domain_root}.yml")
+
+      @site_slug       = config['siteslug']
+      @site_name       = config['name']
+      @avatar          = config['avatar']
+      @about_text      = config['about_text']
+      @birthdate       = config['birthdate']
+      @group_stream_by = config['group_stream_by']
+      @twitter_feeds   = config['services']['twitter']['users']
+      @flickr_feeds    = config['services']['flickr']['users']
+    end
+
     get '/' do 
-      tweets = gather_all_tweets()
+      tweets = gather_all_tweets(false)
       photos = gather_all_photos()
       @river = sort_and_group(tweets + photos)
       haml :index
@@ -34,7 +47,7 @@ module CrossTheStreams
       "Success"
     end
     get '/tweets/?' do
-      @river = sort_and_group(gather_all_tweets())
+      @river = sort_and_group(gather_all_tweets(false))
       haml :index
     end
     get '/photos/?' do
