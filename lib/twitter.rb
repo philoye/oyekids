@@ -13,7 +13,7 @@ class Twitter
   end
     
   def timeline(user=:username, options={})
-    options.merge!({ :count => "20" })
+    options.merge!({ :count => "200" })
     if @cache
       self.class.get_cached("/statuses/user_timeline/#{@user}.json", :query => options)
     else
