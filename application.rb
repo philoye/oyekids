@@ -23,28 +23,22 @@ module CrossTheStreams
     end
 
     get '/' do 
-      tweets = gather_all_tweets($config['services']['twitter']['users'])
-      photos = gather_all_photos($config['services']['flickr']['users'])
-      river = tweets + photos
-      river = river.sort_by { |drop| drop['created'] }.reverse!
-      @grouped_river = river.group_by { |drop| drop[$config['group_stream_by']] }
+      tweets = gather_all_tweets()
+      photos = gather_all_photos()
+      @grouped_river = sort_and_group(tweets + photos)
       haml :index
     end
-    get '/refresh' do
-      tweets = gather_all_tweets($config['services']['twitter']['users'],false)
-      photos = gather_all_photos($config['services']['flickr']['users'],false)
+    get '/refresh' do # hit this to bust the cache and refresh all apis.
+      tweets = gather_all_tweets(false)
+      photos = gather_all_photos(false)
       "Success"
     end
     get '/tweets/?' do
-      river = gather_all_tweets($config['services']['twitter']['users'])
-      river = river.sort_by { |drop| drop['created'] }.reverse!
-      @grouped_river = river.group_by { |drop| drop[$config['group_stream_by']] }
+      @grouped_river = sort_and_group(gather_all_tweets())
       haml :index
     end
     get '/photos/?' do
-      river = gather_all_photos($config['services']['flickr']['users'])
-      river = river.sort_by { |drop| drop['created'] }.reverse!
-      @grouped_river = river.group_by { |drop| drop[$config['group_stream_by']] }
+      @grouped_river = sort_and_group(gather_all_photos())
       haml :index
     end
 
