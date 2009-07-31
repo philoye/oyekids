@@ -2,7 +2,7 @@
 
 .grid-container
   %ul.grid
-    - @grouped_river.each do |separator,river|
+    - @river.each do |separator,items|
       -if $config['group_stream_by'] == "calendar_month"
         %h2.calendar
           - d = Date.parse(separator)
@@ -13,12 +13,11 @@
           %span= separator
           Months
 
-      - river.each do |drop|
+      - items.each do |drop|
         - if drop['text'] # it is a tweet
           %li.tweet
             = format_tweet(drop['text']) + "<br>—&nbsp;@" + drop['user']['screen_name'] + ", "
             %a{:href=> twitter_url(drop)}= pretty_date(drop['created_at'])
-          
         - elsif drop['farm'] # it is a flickr photo
           %li.photo
             %a{:href => photo_path(drop) }= flickr_square(drop)
