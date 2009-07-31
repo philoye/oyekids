@@ -47,5 +47,4 @@ class Twitter
     if whitelist.include? tweet['user']['screen_name'] then tweet end
   end
     
-  
 end
