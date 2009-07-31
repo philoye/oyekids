@@ -76,8 +76,8 @@ end
 def gather_all_tweets(cache=true)
   all_items = []
   @twitter_feeds.each do |feed|
-    items = Twitter.new(feed['username'],cache).timeline
-    items = filter_tweets(items,feed['include'],feed['exclude'])
+    tweets = Twitter.new(feed['username'],cache).timeline
+    items = filter_tweets(tweets,feed['include'],feed['exclude'])
     items.each do |item|
       harmonize_stream(item,"created_at")
     end
@@ -87,12 +87,12 @@ def gather_all_tweets(cache=true)
 end
 def filter_tweets(tweets,whitelist,blacklist)
   if whitelist
-    tweets.reject! do |tweet|
+    tweets = tweets.reject do |tweet|
       !(tweet['text'].downcase.include? whitelist.downcase)
     end
   end
   if blacklist
-    tweets.reject! do |tweet|
+    tweets = tweets.reject do |tweet|
       (tweet['text'].downcase.include? blacklist.downcase)
     end
   end
