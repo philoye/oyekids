@@ -8,8 +8,7 @@ module CrossTheStreams
   class Application < Sinatra::Base
 
     configure do
-      $config = YAML.load_file('config/application.yml')
-      $flickr_api_key = $config['flickr_api_key']
+      $flickr_api_key = "bffdaa9407fcf762439aedaf938e01ac"
 
       set :haml, {:format => :html4}
       set :public, File.join(File.dirname(__FILE__),'public')
@@ -36,7 +35,7 @@ module CrossTheStreams
     end
 
     get '/' do 
-      tweets = gather_all_tweets(false) # false turns off caching, which is fucking things up.
+      tweets = gather_all_tweets() # pass "false" to turn off caching, which is fucking things up.
       photos = gather_all_photos()
       @river = sort_and_group(tweets + photos)
       haml :index
@@ -47,7 +46,7 @@ module CrossTheStreams
       "Success"
     end
     get '/tweets/?' do
-      @river = sort_and_group(gather_all_tweets(false)) # false turns off caching, which is fucking things up.
+      @river = sort_and_group(gather_all_tweets()) # pass "false" to turn off caching, which is fucking things up.
       haml :index
     end
     get '/photos/?' do

@@ -2,9 +2,9 @@ load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 
 # standard settings
 set :app_file, "application.rb"
-set :application, "oyefamily"
+set :application, "oyekids"
 set :app_class, ""
-set :domain, "oye.com.au"
+set :domain, "oyekids.com"
 role :app, domain
 role :web, domain
 # role :db,  domain, :primary => true
@@ -16,7 +16,7 @@ default_run_options[:pty] = true
 
 # scm settings
 set :ssh_options, { :forward_agent => true }
-set :repository, "oye@kesa.pair.com:git/oyefamily.git"
+set :repository, "git://github.com/philoye/oyekids.git"
 set :scm, "git"
 set :branch, "master"
 set :git_shallow_clone, 1

@@ -6,7 +6,7 @@ class Flickr
 	include HTTParty
   include Icebox
   base_uri 'http://api.flickr.com/services/rest'
-  default_params :api_key => $config['flickr_api_key'], :output => 'json'
+  default_params :api_key => $flickr_api_key, :output => 'json'
 
   def initialize(nsid,cache=true)
     @nsid = nsid
