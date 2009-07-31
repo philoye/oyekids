@@ -1,0 +1,32 @@
+name: Oye Kids
+siteslug: oyekids
+about_text: "This is the home of Simon, Jessica, and Felix. Hopefully, it gives a taste of the chaos that the three of us can produce."
+avatar: http://farm4.static.flickr.com/3636/3556138250_0ede1e9e86_s.jpg
+group_stream_by: "calendar_month"
+birthdate: 2000-01-01
+services:
+  flickr:
+    users: #whitelist of flickr feeds to check
+      - nsid:     12021774@N05
+        username: philoye
+        tags:     "jessica, jessicaoye, felix, felixoye, simon, simonoye"
+      - nsid:     30853535@N00
+        username: jenmonsta
+        tags:     "jessica, jessicaoye, felix, felixoye, simon, simonoye"
+  twitter:
+    users: #whitelist of twitter users to check
+      - username: felixoye
+        include:  
+        exclude:   
+      - username: jessicaoye
+        include:  
+        exclude:   
+      - username: simonoye
+        include:  
+        exclude:   
+      - username: philoye
+        include:  "@jessicaoye, @felixoye, @simonoye"
+        exclude:   
+      - username: jenioye
+        include:  "@jessicaoye, @felixoye, @simonoye"
+        exclude:   

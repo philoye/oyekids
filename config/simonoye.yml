@@ -1,0 +1,32 @@
+name: Simon Oye
+siteslug: simonoye
+about_text: "My name is Simon Oye and this is my little corner of the web. For all of my adoring fans around the world, I built this site so you can keep with my continuing adventures."
+avatar: http://farm2.static.flickr.com/1188/3170516144_607d4ed43c_s.jpg
+group_stream_by: "age_month"
+birthdate: 2006-12-29
+services:
+  flickr:
+    users: #whitelist of flickr feeds to check
+      - nsid:     12021774@N05
+        username: philoye
+        tags:     "simon, simonoye"
+      - nsid:     30853535@N00
+        username: jenmonsta
+        tags:     "simon, simonoye"
+  twitter:
+    users: #whitelist of twitter users to check
+      - username: felixoye
+        include:  @simonoye
+        exclude:   
+      - username: jessicaoye
+        include:  @simonoye
+        exclude:   
+      - username: simonoye
+        include:  
+        exclude:  
+      - username: philoye
+        include:  @simonoye
+        exclude:  
+      - username: jenioye
+        include:  @simonoye
+        exclude:  
