@@ -36,7 +36,7 @@ module CrossTheStreams
     end
 
     get '/' do 
-      tweets = gather_all_tweets(false)
+      tweets = gather_all_tweets(false) # false turns off caching, which is fucking things up.
       photos = gather_all_photos()
       @river = sort_and_group(tweets + photos)
       haml :index
@@ -47,7 +47,7 @@ module CrossTheStreams
       "Success"
     end
     get '/tweets/?' do
-      @river = sort_and_group(gather_all_tweets(false))
+      @river = sort_and_group(gather_all_tweets(false)) # false turns off caching, which is fucking things up.
       haml :index
     end
     get '/photos/?' do
