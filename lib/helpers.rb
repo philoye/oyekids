@@ -59,7 +59,13 @@ def format_tweet(text)
   text.linkify.link_mentions.link_hash_tags
 end
 
-def gather_all_photos(feeds,cache=true)
+def sort_and_group(array_of_items)
+  river = array_of_items.sort_by { |drop| drop['created'] }.reverse!
+  return river.group_by { |drop| drop[$config['group_stream_by']] }
+end
+
+def gather_all_photos(cache=true)
+  feeds = $config['services']['flickr']['users']
   all_items = []
   feeds.each do |feed|
     items = Flickr.new(feed['nsid'],cache).photos(:tags => feed['tags'])
@@ -74,7 +80,8 @@ def gather_all_photos(feeds,cache=true)
   end
   all_items
 end
-def gather_all_tweets(feeds,cache=true)
+def gather_all_tweets(cache=true)
+  feeds = $config['services']['twitter']['users']
   all_items = []
   feeds.each do |feed|
     items = Twitter.new(feed['username'],cache).filter_tweets(feed['include'],feed['reject'])
