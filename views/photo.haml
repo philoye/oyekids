@@ -21,9 +21,6 @@
         %li 
           Taken on
           = pretty_date(@photo['dates']['taken'])
-        / %li
-        /   Posted
-        /   = @photo['dates']['posted']
 
     .photo-comments
       %p
@@ -38,10 +35,3 @@
 
       %p 
         %a{:href=>flickr_url(@photo)} Add your comment on Flickr
-
- 
-/ %p photo
-/ = @photo.inspect
-/ %p sizes
-/ = @sizes.inspect
-/ 
