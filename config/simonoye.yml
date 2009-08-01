@@ -4,6 +4,7 @@ about_text: "My name is Simon Oye and this is my little corner of the web. For a
 avatar: http://farm2.static.flickr.com/1188/3170516144_607d4ed43c_s.jpg
 group_stream_by: "age_month"
 birthdate: 2006-12-29
+google_analytics_id: "UA-1807438-2"
 services:
   flickr:
     users: #whitelist of flickr feeds to check

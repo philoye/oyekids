@@ -24,14 +24,16 @@ module CrossTheStreams
       domain_root = Rack::Request.new(env).host.gsub(/www./,'').split('.')[0]
       config = YAML.load_file("config/#{domain_root}.yml")
 
-      @site_slug       = config['siteslug']
-      @site_name       = config['name']
-      @avatar          = config['avatar']
-      @about_text      = config['about_text']
-      @birthdate       = config['birthdate']
-      @group_stream_by = config['group_stream_by']
-      @twitter_feeds   = config['services']['twitter']['users']
-      @flickr_feeds    = config['services']['flickr']['users']
+      @site_slug           = config['siteslug']
+      @site_name           = config['name']
+      @avatar              = config['avatar']
+      @about_text          = config['about_text']
+      @birthdate           = config['birthdate']
+      @group_stream_by     = config['group_stream_by']
+      @twitter_feeds       = config['services']['twitter']['users']
+      @flickr_feeds        = config['services']['flickr']['users']
+      @google_analytics_id = config['google_analytics_id']
+
     end
 
     get '/' do 

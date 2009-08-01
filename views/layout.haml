@@ -5,12 +5,11 @@
     %title= @site_name
     %link{:rel=>"icon", :type=>"image/gif", :href=>"/images/favicon-#{@site_slug}.gif"}
     %link{:href => versioned_stylesheet('oye_base'), :media => "screen", :rel => "stylesheet", :type => "text/css"}
-    
+        
   %body{:class => @site_slug}
-    .container{:class => ''}
-
+    .container
       = partial :header
       .content
         = yield
-      
       = partial :footer
+    = tracking_code
