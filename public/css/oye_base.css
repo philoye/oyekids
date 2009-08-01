@@ -125,7 +125,7 @@ h1 {
   height: 75px;
   margin: 2px;
   padding-left: 5px;
-  width: 540px;
+  width: 544px;
 }
   h1 a {
     text-decoration: none;
@@ -158,7 +158,7 @@ ul.navigation li {
 
   .grid-container {
     background: url('../images/bg-grid.gif') repeat;
-    overflow: auto;
+    overflow: hidden;
   }
 
   ul.grid li {
@@ -189,6 +189,8 @@ ul.navigation li {
       text-align: center;
       letter-spacing: 1px;
       font-size: 10px;
+      margin: 0;
+      padding: 0;
     }
       h2.calendar {
         line-height: 15px;
@@ -235,7 +237,7 @@ ul.navigation li {
   width: 632px;
 }
   .photo-details a img {
-    border: 2px solid transparent;
+    border: 2px solid #222;
     -ms-interpolation-mode:bicubic;
   }
     .photo-details a:hover img {
