@@ -4,14 +4,16 @@
   %ul.grid
     - @river.each do |separator,items|
       -if @group_stream_by == "calendar_month"
-        %h2.calendar
-          - d = Date.parse(separator)
-          = d.strftime("%B")
-          %span= d.strftime("%y")
+        %li.separator
+          %h2.calendar
+            - d = Date.parse(separator)
+            = d.strftime("%B")
+            %span= d.strftime("%y")
       -else
-        %h2.age
-          %span= separator
-          Months
+        %li.separator
+          %h2.age
+            %span= separator
+            Months
 
       - items.each do |drop|
         - if drop['text'] # it is a tweet

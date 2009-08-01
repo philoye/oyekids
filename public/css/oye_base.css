@@ -60,7 +60,7 @@ br {
 }
 .header {
   height: 75px;
-  margin-bottom: 79px;
+  padding-bottom: 79px;
 }
 .content {
   clear: both;
@@ -156,34 +156,6 @@ ul.navigation li {
 
 /* grid styles */
 
-h2 {
-  float: left;
-  height: 65px;
-  width: 65px;
-  padding: 5px;
-  margin: 2px;
-  text-transform: uppercase;
-  font-weight: bold;
-  background-color: #1b1b1b;
-  color: #666;
-  text-align: center;
-  letter-spacing: 1px;
-  font-size: 10px;
-}
-  h2.calendar {
-    line-height: 15px;
-  }
-
-  h2 span {
-    display: block;
-    font-weight: bold;
-    letter-spacing: -1px;
-    font-size: 48px;
-    line-height: 48px;
-  }
-    h2.calendar span {
-    }
-
   .grid-container {
     background: url('../images/bg-grid.gif') repeat;
     overflow: auto;
@@ -201,6 +173,34 @@ h2 {
     ul.grid li a:hover img {
       border: 2px solid #ccc;
     }
+
+    li.separator {
+      float: left;
+      height: 65px;
+      width: 65px;
+      padding: 5px;
+      margin: 2px;
+    }
+    h2 {
+      text-transform: uppercase;
+      font-weight: bold;
+      background-color: #1b1b1b;
+      color: #666;
+      text-align: center;
+      letter-spacing: 1px;
+      font-size: 10px;
+    }
+      h2.calendar {
+        line-height: 15px;
+      }
+
+      h2 span {
+        display: block;
+        font-weight: bold;
+        letter-spacing: -1px;
+        font-size: 48px;
+        line-height: 48px;
+      }
 
     li.tweet {
       color: #999;
