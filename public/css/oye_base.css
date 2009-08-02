@@ -186,7 +186,6 @@ ul.navigation li {
     h2 {
       text-transform: uppercase;
       font-weight: bold;
-      color: #666;
       text-align: center;
       letter-spacing: 1px;
       font-size: 10px;
@@ -287,4 +286,9 @@ ul.navigation li {
 .jessicaoye a:hover img { border-color: #ff0066 !important; }
 .simonoye a:hover img { border-color: #00dbff !important; }
 .oyekids a:hover img { border-color: #ffb006 !important; }
+
+.felixoye li.separator { color:#9be302; }
+.jessicaoye li.separator { color:#ff0066; }
+.simonoye li.separator { color:#00dbff; }
+.oyekids li.separator { color:#ffb006; }
 
