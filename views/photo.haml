@@ -4,9 +4,12 @@
 
 .photo-container
   .photo-details
+
     - if @photo['media'] == "photo"
       %a{:href=>flickr_url(@photo)}
-        %img{:src => photo_size['source'], :width => "628", :alt => @photo['title'], :title => @photo['title']}/
+        - hw = calculate_height_width(photo_size,"628")
+        %img{:src => photo_size['source'], :width => hw['width'], :height=> hw['height'], :alt => @photo['title'], :title => @photo['title']}
+
     - elsif @photo['media'] == "video"
       - video= @sizes.find {|s| s['label'] == "Video Player"}
       = flickr_embed_code(video,"628")
