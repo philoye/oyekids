@@ -159,6 +159,7 @@ ul.navigation li {
   .grid-container {
     background: url('../images/bg-grid.gif') repeat;
     overflow: hidden;
+    zoom: 1;
   }
 
   ul.grid li {
@@ -176,21 +177,19 @@ ul.navigation li {
 
     li.separator {
       float: left;
+      background-color: #1b1b1b;
       height: 65px;
-      width: 65px;
-      padding: 5px;
+      width: 75px;
+      padding: 5px 0;
       margin: 2px;
     }
     h2 {
       text-transform: uppercase;
       font-weight: bold;
-      background-color: #1b1b1b;
       color: #666;
       text-align: center;
       letter-spacing: 1px;
       font-size: 10px;
-      margin: 0;
-      padding: 0;
     }
       h2.calendar {
         line-height: 15px;
