@@ -84,7 +84,7 @@ br {
   text-decoration: none;
   border-bottom: 1px solid #666;
 }
-  .footer ul li a:hover {
+  .footer a:hover {
     color: #fff !important;
     background-color: transparent !important;
     border-bottom: 1px solid #ccc;
