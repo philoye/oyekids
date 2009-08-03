@@ -96,25 +96,19 @@ def gather_all_tweets(cache=true)
 end
 def filter_tweets(tweets,whitelist,blacklist)
   if whitelist
-    tweets = tweets.reject do |tweet|
-      !(tweet['text'].downcase.include? whitelist.downcase)
-    end
+    tweets = tweets.delete_if{|t| !whitelist.split(',').any?{|w| t['text'].match(w)} }
   end
   if blacklist
-    tweets = tweets.reject do |tweet|
-      (tweet['text'].downcase.include? blacklist.downcase)
-    end
+    tweets = tweets.delete_if{|t| whitelist.split(',').any?{|w| t['text'].match(w)} }
   end
   return tweets
 end
 def harmonize_stream(item,attribute,tz)
   bd = DateTime.parse(@birthdate.to_s)
   d  = DateTime.parse(item[attribute])
-  p item['source'] + d.to_s
   if tz=="utc"
     d = d.new_offset(Rational(10,24))
   end
-  p d.to_s
   item['age_month']  = ((d - bd) / 30.4).to_i.to_s
   item['calendar_month'] = d.strftime("%Y-%m").to_s
   item['created'] = d.to_s
