@@ -110,9 +110,6 @@ br {
 
 .avatar {
   float: left;
-  position: relative;
-  left: -2px;
-  top: -2px;
 }
   .avatar img {
     border: 2px solid transparent !important;
