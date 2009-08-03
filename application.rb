@@ -39,6 +39,7 @@ module CrossTheStreams
       tweets = gather_all_tweets() # pass "false" to turn off caching, which is fucking things up.
       photos = gather_all_photos()
       @river = sort_and_group(tweets + photos)
+      @page_title = ""
       haml :index
     end
     get '/refresh' do # hit this to bust the cache and refresh all apis.
@@ -48,10 +49,12 @@ module CrossTheStreams
     end
     get '/tweets/?' do
       @river = sort_and_group(gather_all_tweets())
+      @page_title = "Words by "
       haml :index
     end
     get '/photos/?' do
       @river = sort_and_group(gather_all_photos())
+      @page_title = "Photos of "
       haml :index
     end
 
