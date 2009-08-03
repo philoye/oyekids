@@ -16,10 +16,10 @@
             Months
 
       - items.each do |drop|
-        - if drop['text'] # it is a tweet
+        - if drop['source'] == 'twitter'
           %li.tweet
             = format_tweet(drop['text']) + "<br>—&nbsp;@" + drop['user']['screen_name'] + ", "
-            %a{:href=> twitter_url(drop)}= pretty_date(drop['created_at'])
-        - elsif drop['farm'] # it is a flickr photo
+            %a{:href=> twitter_url(drop)}= pretty_date(drop['created'])
+        - elsif drop['source'] == 'flickr'
           %li.photo
             %a{:href => photo_path(drop) }= flickr_square(drop)
