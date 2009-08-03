@@ -21,9 +21,9 @@ module CrossTheStreams
     end
 
     before do
-      domain_root = Rack::Request.new(env).host.gsub(/www./,'').split('.')[0]
-      config = YAML.load_file("config/#{domain_root}.yml")
+      @domain_root = Rack::Request.new(env).host.gsub(/www./,'').split('.')[0]
 
+      config = YAML.load_file("config/#{@domain_root}.yml")
       @site_slug           = config['siteslug']
       @site_name           = config['name']
       @avatar              = config['avatar']
@@ -48,7 +48,7 @@ module CrossTheStreams
       "Success"
     end
     get '/tweets/?' do
-      @river = sort_and_group(gather_all_tweets()) # pass "false" to turn off caching, which is fucking things up.
+      @river = sort_and_group(gather_all_tweets())
       haml :index
     end
     get '/photos/?' do

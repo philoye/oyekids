@@ -10,9 +10,11 @@
       %li
         Too much cuteness? Read just the  
         %a{:href => "/tweets/"} tweets
-      %li
-        Need your fix in real time? Follow me on
-        %a{:href => "http://twitter.com/#{@site_slug}"} Twitter
+      
+      - if @domain_root != "oyekids"
+        %li
+          Need your fix in real time? Follow me on
+          %a{:href => "http://twitter.com/#{@site_slug}"} Twitter
 
   .links
     %ul
