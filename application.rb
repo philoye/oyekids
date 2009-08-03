@@ -33,6 +33,7 @@ module CrossTheStreams
       @twitter_feeds       = config['services']['twitter']['users']
       @flickr_feeds        = config['services']['flickr']['users']
       @google_analytics_id = config['google_analytics_id']
+      @reinvigorate_id     = config['reinvigorate_id']
     end
 
     get '/' do 
