@@ -5,7 +5,7 @@ avatar: http://farm4.static.flickr.com/3257/3169689939_6ef957dcf4_s.jpg
 group_stream_by: "age_month"
 birthdate: 2008-08-02
 google_analytics_id: "UA-1807438-5"
-reinvigorate_id: "a882g-8201k8xk9e"
+reinvigorate_id: "66rl8-i799a79n23"
 services:
   flickr:
     users: #whitelist of flickr feeds to check
