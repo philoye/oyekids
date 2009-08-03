@@ -113,9 +113,9 @@ br {
   left: -2px;
   top: -2px;
 }
-.avatar img {
-  border: 2px solid transparent !important;
-}
+  .avatar img {
+    border: 2px solid transparent !important;
+  }
 
 h1 {
   color: #ccc;
@@ -151,6 +151,9 @@ ul.navigation li {
     display: block;
     background-color: #333;
     text-decoration: none;
+  }
+  ul.navigation li a:hover {
+    text-indent: -10000em;
   }
 
 
@@ -277,10 +280,16 @@ ul.navigation li {
 .simonoye a   { color:#00dbff; }
 .oyekids a   { color:#ffb006; }
 
-.felixoye .grid.navigation a:hover { color:#222; background-color: #9be302 !important; }
-.jessicaoye .grid.navigation a:hover { color:#222; background-color: #ff0066 !important; }
-.simonoye .grid.navigation a:hover   { color:#222; background-color: #00dbff !important; }
-.oyekids .grid.navigation a:hover   { color:#222; background-color: #ffb006 !important; }
+/*.felixoye .grid.navigation a:hover { color:#222; background-color: #9be302; }
+.jessicaoye .grid.navigation a:hover { color:#222; background-color: #ff0066; }
+.simonoye .grid.navigation a:hover   { color:#222; background-color: #00dbff; }
+.oyekids .grid.navigation a:hover   { color:#222; background-color: #ffb006; }
+*/
+
+.nav-felixoye a:hover { background-image: url(http://farm4.static.flickr.com/3257/3169689939_6ef957dcf4_s.jpg); }
+.nav-jessicaoye a:hover { background-image: url(http://farm4.static.flickr.com/3258/3170518772_83651f3958_s.jpg); }
+.nav-simonoye a:hover { background-image: url(http://farm2.static.flickr.com/1188/3170516144_607d4ed43c_s.jpg); }
+.nav-oyekids a:hover   { background-image: url(http://farm4.static.flickr.com/3636/3556138250_0ede1e9e86_s.jpg); }
 
 .felixoye a:hover img { border-color: #9be302 !important; }
 .jessicaoye a:hover img { border-color: #ff0066 !important; }
