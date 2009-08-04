@@ -96,10 +96,10 @@ def gather_all_tweets(cache=true)
 end
 def filter_tweets(tweets,whitelist,blacklist)
   if whitelist
-    tweets = tweets.delete_if{|t| !whitelist.split(',').any?{|w| t['text'].match(w)} }
+    tweets = tweets.reject{|t| !whitelist.split(',').any?{|w| t['text'].match(w)} }
   end
   if blacklist
-    tweets = tweets.delete_if{|t| whitelist.split(',').any?{|w| t['text'].match(w)} }
+    tweets = tweets.reject{|t| whitelist.split(',').any?{|w| t['text'].match(w)} }
   end
   return tweets
 end
