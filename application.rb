@@ -21,7 +21,7 @@ module CrossTheStreams
     end
 
     before do
-      @domain_root = Rack::Request.new(env).host.gsub(/www./,'').split('.')[0]
+      @domain_root = request.host.split(".").first
 
       config = YAML.load_file("config/#{@domain_root}.yml")
       @site_slug           = config['siteslug']
