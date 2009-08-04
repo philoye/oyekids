@@ -1,19 +1,8 @@
+- @page_class = "photo_page"
 - @page_title = "“" + @photo['title'] + "”, a photo of "
-
 - photo_size = @sizes.find {|s| s['label'] == "Large"} || @sizes.find {|s| s['label'] == "Original"}
 
-.photo-container
-  .photo-details
-
-    - if @photo['media'] == "photo"
-      %a{:href=>flickr_url(@photo)}
-        - hw = calculate_height_width(photo_size,"628")
-        %img{:src => photo_size['source'], :width => hw['width'], :height=> hw['height'], :alt => @photo['title'], :title => @photo['title']}
-
-    - elsif @photo['media'] == "video"
-      - video= @sizes.find {|s| s['label'] == "Video Player"}
-      = flickr_embed_code(video,"628")
-
+.photo-wrapper
   .photo-info-container
     .photo-meta
       %ul
@@ -38,3 +27,16 @@
 
       %p 
         %a{:href=>flickr_url(@photo)} Add your comment on Flickr
+
+  .photo-details-container
+    .photo-details
+
+      - if @photo['media'] == "photo"
+        %a{:href=>flickr_url(@photo)}
+          - hw = calculate_height_width(photo_size,"628")
+          %img{:src => photo_size['source'], :width => "100%", :alt => @photo['title'], :title => @photo['title']}
+
+      - elsif @photo['media'] == "video"
+        - video= @sizes.find {|s| s['label'] == "Video Player"}
+        = flickr_embed_code(video,"628")
+

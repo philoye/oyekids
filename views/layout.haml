@@ -9,7 +9,7 @@
     %script{:type=>"text/javascript", :src=>versioned_javascript('oye')}
     
   %body{:class => @site_slug}
-    .container
+    .container{:class => @page_class}
       = partial :header
       .content
         = yield

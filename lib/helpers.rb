@@ -22,8 +22,10 @@ def flickr_square(photo)
 end
 def flickr_embed_code(video,desired_width)
   height_width = calculate_height_width(video,desired_width)
-  width = height_width['width']
-  height = height_width['height']
+  # width = height_width['width']
+  # height = height_width['height']
+  width = "100%"
+  height = "100%"
   %(<object type="application/x-shockwave-flash" width="#{width}" height="#{height}" data="#{video['source']}"  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="flickr_show_info_box=false"></param> <param name="movie" value="#{video['source']}"></param><param name="bgcolor" value="#000000"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="#{video['source']}" bgcolor="#000000" allowfullscreen="true" flashvars="flickr_show_info_box=false" height="#{height}" width="#{width}"></embed></object>)
 end
 def calculate_height_width(item,desired_width)
