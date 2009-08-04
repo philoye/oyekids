@@ -69,9 +69,9 @@ br {
 }
 .footer {
   clear: both;
-  overflow: auto;
+  overflow: hidden;
   margin: 2px;
-  margin-top: 79px;
+  margin-top: 25px;
   height: 154px;
   width: 100%;
   color: #777;
@@ -92,13 +92,16 @@ br {
   }
 .footer .about {
   float: left;
-  width: 30%;
   padding-right: 20px;
+  max-width: 454px;
 }
+  .footer .about p {
+    margin-bottom: 1em;
+  }
 .footer .links {
-  float: left;
+  float: right;
   margin-left: 4px;
-  width: 30%;
+  width: 292px;
   padding-right: 20px;
 }
 .footer .links ul {
