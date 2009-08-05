@@ -34,7 +34,7 @@
       - if @photo['media'] == "photo"
         %a{:href=>flickr_url(@photo)}
           - hw = calculate_height_width(photo_size,"628")
-          %img{:src => photo_size['source'], :width => "100%", :alt => @photo['title'], :title => @photo['title']}
+          %img{:src => photo_size['source'], :alt => @photo['title'], :title => @photo['title']}
 
       - elsif @photo['media'] == "video"
         - video= @sizes.find {|s| s['label'] == "Video Player"}
