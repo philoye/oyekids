@@ -37,23 +37,23 @@ def calculate_height_width(item,desired_width)
 end
 
 def photo_path(photo)
-  user = user_from_nsid(photo['owner'])
-  "/photos/#{user}/#{photo['id']}"
+  username = user_from_nsid(photo['owner'])
+  "/photos/#{username}/#{photo['id']}"
 end
-def user_from_nsid(text)
-  username = @flickr_feeds.each do |user|
-    if text = user['nsid']
-      username = user['username']
+def user_from_nsid(nsid)
+  username = @flickr_feeds.each do |feed_user|
+    if feed_user['nsid'] == nsid
+      username = feed_user['username']
+      return username
     end
-    return username
   end
 end
 def nsid_from_user(text)
   nsid = @flickr_feeds.each do |user|
-    if text = user['username']
+    if text == user['username']
       nsid = user['nsid']
+      return nsid
     end
-    return nsid
   end
 end
 
