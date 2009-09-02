@@ -13,7 +13,7 @@ services:
         username: philoye
         tags:     "simon, simonoye"
       - nsid:     30853535@N00
-        username: jenmonsta
+        username: jenioye
         tags:     "simon, simonoye"
   twitter:
     users: #whitelist of twitter users to check
