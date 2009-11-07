@@ -21,7 +21,11 @@ module CrossTheStreams
     end
 
     before do
-      @domain_root = request.host.split(".").first
+      domain_array = request.host.split(".")
+      if domain_array.first == "www"
+          domain_array.delete_at(0)
+      end
+      @domain_root = domain_array.first
 
       config = YAML.load_file("config/#{@domain_root}.yml")
       @site_slug           = config['siteslug']
