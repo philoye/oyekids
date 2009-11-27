@@ -41,8 +41,8 @@ module CrossTheStreams
     end
 
     get '/' do 
-      tweets = gather_all_tweets() # pass "false" to turn off caching, which is fucking things up.
-      photos = gather_all_photos()
+      tweets = gather_all_tweets(false) # pass "false" to turn off caching, which is fucking things up.
+      photos = gather_all_photos(false)
       @river = sort_and_group(tweets + photos)
       @page_title = ""
       haml :index
