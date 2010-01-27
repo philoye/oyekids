@@ -1,7 +1,7 @@
 .grid-container
   %ul.grid
     - @river.each do |separator,items|
-      -if @group_stream_by == "calendar_month"
+      -if @config.group_stream_by == "calendar_month"
         %li.separator
           %h2.calendar
             - d = Date.parse(separator)

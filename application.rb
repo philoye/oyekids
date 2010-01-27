@@ -3,6 +3,7 @@ require 'sinatra'
 require 'haml'
 require 'pp'
 require 'active_support'
+require 'ostruct'
 
 module CrossTheStreams
   class Application < Sinatra::Base
@@ -23,21 +24,12 @@ module CrossTheStreams
     before do
       domain_array = request.host.split(".")
       if domain_array.first == "www"
-          domain_array.delete_at(0)
+        domain_array.delete_at(0)
       end
       @domain_root = domain_array.first
+      if @domain_root == "localhost" then @domain_root = "oyekids" end
 
-      config = YAML.load_file("config/#{@domain_root}.yml")
-      @site_slug           = config['siteslug']
-      @site_name           = config['name']
-      @avatar              = config['avatar']
-      @about_text          = config['about_text']
-      @birthdate           = config['birthdate']
-      @group_stream_by     = config['group_stream_by']
-      @twitter_feeds       = config['services']['twitter']['users']
-      @flickr_feeds        = config['services']['flickr']['users']
-      @google_analytics_id = config['google_analytics_id']
-      @reinvigorate_id     = config['reinvigorate_id']
+      @config =  OpenStruct.new(YAML.load_file("config/#{@domain_root}.yml"))
     end
 
     get '/' do 

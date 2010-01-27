@@ -1,9 +1,9 @@
 .header
   .avatar
     %a{:href=>"/"}
-      %img{:src => @avatar, :width => "75", :height =>"75" }
+      %img{:src => @config.avatar, :width => "75", :height =>"75" }
   %h1
-    %a{:href=>"/"}= @site_name
+    %a{:href=>"/"}= @config.site_name
 
   %ul.grid.navigation
     %li.nav-oyekids

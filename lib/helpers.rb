@@ -41,7 +41,7 @@ def photo_path(photo)
   "/photos/#{username}/#{photo['id']}"
 end
 def user_from_nsid(nsid)
-  username = @flickr_feeds.each do |feed_user|
+  username = @config.flickr_sources.each do |feed_user|
     if feed_user['nsid'] == nsid
       username = feed_user['username']
       return username
@@ -49,7 +49,7 @@ def user_from_nsid(nsid)
   end
 end
 def nsid_from_user(text)
-  nsid = @flickr_feeds.each do |user|
+  nsid = @config.flickr_sources.each do |user|
     if text == user['username']
       nsid = user['nsid']
       return nsid
@@ -66,12 +66,12 @@ end
 
 def sort_and_group(array_of_items)
   river = array_of_items.sort_by { |drop| drop['created'] }.reverse!
-  return river.group_by { |drop| drop[@group_stream_by] }
+  return river.group_by { |drop| drop[@config.group_stream_by] }
 end
 
 def gather_all_photos(cache=true)
   all_items = []
-  @flickr_feeds.each do |feed|
+  @config.flickr_sources.each do |feed|
     items = Flickr.new(feed['nsid'],cache).photos(:tags => feed['tags'])
     items.each do |item|
       item['source'] = "flickr"
@@ -83,7 +83,7 @@ def gather_all_photos(cache=true)
 end
 def gather_all_tweets(cache=true)
   all_items = []
-  @twitter_feeds.each do |feed|
+  @config.twitter_sources.each do |feed|
     tweets = Twitter.new(feed['username'],cache).timeline
     items = filter_tweets(tweets,feed['include'],feed['exclude'])
     items.each do |item|
@@ -104,7 +104,7 @@ def filter_tweets(tweets,whitelist,blacklist)
   return tweets
 end
 def harmonize_stream(item,attribute,tz)
-  bd = DateTime.parse(@birthdate.to_s)
+  bd = DateTime.parse(@config.birthdate.to_s)
   d  = DateTime.parse(item[attribute])
   if tz=="utc"
     d = d.new_offset(Rational(10,24))
@@ -157,13 +157,13 @@ def tracking_code
     </script>
     <script type="text/javascript">
     try {
-    var pageTracker = _gat._getTracker("#{@google_analytics_id}");
+    var pageTracker = _gat._getTracker("#{@config.google_analytics_id}");
     pageTracker._trackPageview();
     } catch(err) {}</script>
 
     <script type="text/javascript" src="http://include.reinvigorate.net/re_.js"></script>
     <script type="text/javascript">
-    re_("#{@reinvigorate_id}");
+    re_("#{@config.reinvigorate_id}");
     </script>
     
     )
