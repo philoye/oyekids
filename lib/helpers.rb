@@ -12,7 +12,7 @@ def partial(name)
 end
 
 def flickr_src(photo, size=nil)
-  "http://farm#{photo['farm']}.static.flickr.com/#{photo['server']}/#{photo['id']}_#{photo['secret']}#{size && "_#{size}"}.jpg"
+  "http://farm#{photo[:farm]}.static.flickr.com/#{photo[:server]}/#{photo[:id]}_#{photo[:secret]}#{size && "_#{size}"}.jpg"
 end
 def flickr_url(photo)
   "http://www.flickr.com/photos/#{photo['owner']['username']}/#{photo['id']}/"
@@ -37,8 +37,7 @@ def calculate_height_width(item,desired_width)
 end
 
 def photo_path(photo)
-  username = user_from_nsid(photo['owner'])
-  "/photos/#{username}/#{photo['id']}"
+  "/photos/#{photo[:user]}/#{photo[:id]}"
 end
 def user_from_nsid(nsid)
   username = @config.flickr_sources.each do |feed_user|
@@ -58,15 +57,10 @@ def nsid_from_user(text)
 end
 
 def twitter_url(tweet)
-  "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id'].to_s
+  "http://twitter.com/" + tweet[:user] + "/status/" + tweet['id'].to_s
 end
 def format_tweet(text)
   text.linkify.link_mentions.link_hash_tags
-end
-
-def sort_and_group(array_of_items)
-  river = array_of_items.sort_by { |drop| drop['created'] }.reverse!
-  return river.group_by { |drop| drop[@config.group_stream_by] }
 end
 
 def gather_all_photos(cache=true)
@@ -114,6 +108,18 @@ def harmonize_stream(item,attribute,tz)
   item['created'] = d.to_s
   return item
 end
+
+def sort_and_group(array_of_items,group_by,startdate)
+  river = array_of_items.sort_by { |drop| drop[:created] }.reverse!
+  return river.group_by do |drop| 
+    if group_by == "age_month"
+      ((DateTime.parse(drop[:created]) - DateTime.parse(startdate)) / 30.4).to_i.to_s
+    else
+      DateTime.parse(drop[:created]).strftime("%Y-%m").to_s
+    end
+  end
+end
+
 
 def pretty_date(datetime_string)
   DateTime.parse(datetime_string).strftime("%e %B %y, %l:%m%p")

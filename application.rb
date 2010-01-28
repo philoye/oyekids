@@ -3,6 +3,7 @@ require 'haml'
 require 'pp'
 require 'active_support'
 require 'ostruct'
+require 'smoke'
 
 module CrossTheStreams
   class Application < Sinatra::Base
@@ -10,6 +11,7 @@ module CrossTheStreams
     configure do
       $flickr_api_key = "bffdaa9407fcf762439aedaf938e01ac"
 
+      set :logging, true
       set :haml, {:format => :html4}
       set :public, File.join(File.dirname(__FILE__),'public')
       set :views, File.join(File.dirname(__FILE__),'views')
@@ -31,10 +33,21 @@ module CrossTheStreams
       @config =  OpenStruct.new(YAML.load_file("config/#{@domain_root}.yml"))
     end
 
+    get '/smoke/?' do
+      Smoke[:twitter].username("philoye").include_text("@jessicaoye, @felixoye, @simonoye".gsub(/,\s*/,"|"))
+      Smoke[:flickr].flickr_user_id("12021774@N05").flickr_user_name("philoye").flickr_tags("jessica, jessicaoye, simon, simonoye, felix, felixoye")
+      @river = Smoke[:stream].output
+      @river = sort_and_group(@river,@config.group_stream_by,@config.birthdate)
+      @page_title = ""
+      pp @river
+      haml :smoke
+    end
+
     get '/' do 
       tweets = gather_all_tweets(false) # pass "false" to turn off caching, which is fucking things up.
       photos = gather_all_photos(false)
       @river = sort_and_group(tweets + photos)
+      pp @river
       @page_title = ""
       haml :index
     end
