@@ -29,40 +29,24 @@ module CrossTheStreams
       end
       @domain_root = domain_array.first
       if @domain_root == "localhost" then @domain_root = "oyekids" end
-
       @config =  OpenStruct.new(YAML.load_file("config/#{@domain_root}.yml"))
     end
 
-    get '/smoke/?' do
-      Smoke[:twitter].username("philoye").include_text("@jessicaoye, @felixoye, @simonoye".gsub(/,\s*/,"|"))
-      Smoke[:flickr].flickr_user_id("12021774@N05").flickr_user_name("philoye").flickr_tags("jessica, jessicaoye, simon, simonoye, felix, felixoye")
+    get '/' do 
       @river = Smoke[:stream].output
       @river = sort_and_group(@river,@config.group_stream_by,@config.birthdate)
       @page_title = ""
-      pp @river
-      haml :smoke
-    end
-
-    get '/' do 
-      tweets = gather_all_tweets(false) # pass "false" to turn off caching, which is fucking things up.
-      photos = gather_all_photos(false)
-      @river = sort_and_group(tweets + photos)
-      pp @river
-      @page_title = ""
       haml :index
     end
-    get '/refresh' do # hit this to bust the cache and refresh all apis.
-      tweets = gather_all_tweets(false)
-      photos = gather_all_photos(false)
-      "Success"
-    end
     get '/tweets/?' do
-      @river = sort_and_group(gather_all_tweets())
+      @river = Smoke[:twitter].output
+      @river = sort_and_group(@river,@config.group_stream_by,@config.birthdate)
       @page_title = "Words by "
       haml :index
     end
     get '/photos/?' do
-      @river = sort_and_group(gather_all_photos())
+      @river = Smoke[:flickr].output
+      @river = sort_and_group(@river,@config.group_stream_by,@config.birthdate)
       @page_title = "Photos of "
       haml :index
     end
@@ -71,9 +55,9 @@ module CrossTheStreams
       redirect '/photos'
     end
     get '/photos/:user/:id/?' do
+      @photo = Smoke[:flickr_photo_info].photo_id(params[:id]).output.first
+      @sizes = Smoke[:flickr_photo_sizes].photo_id(params[:id]).output
       nsid = nsid_from_user(params[:user])
-      @photo = Flickr.new(nsid).photo(params[:id])
-      @sizes = Flickr.new(nsid).photo_sizes(params[:id])
       @comments = Flickr.new(nsid).photo_comments(params[:id])
       haml :photo
     end

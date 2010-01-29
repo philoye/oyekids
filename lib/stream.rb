@@ -25,6 +25,8 @@ Smoke.data(:twitter) do
   end
 end
 
+Smoke[:twitter].username("philoye").include_text("@jessicaoye, @felixoye, @simonoye".gsub(/,\s*/,"|"))
+
 Smoke.yql(:flickr) do
   prepare do
     select :all
@@ -46,6 +48,8 @@ Smoke.yql(:flickr) do
     end
   end
 end
+
+Smoke[:flickr].flickr_user_id("12021774@N05").flickr_user_name("philoye").flickr_tags("jessica, jessicaoye, simon, simonoye, felix, felixoye")
 
 Smoke.join(:twitter, :flickr) do
   name :stream

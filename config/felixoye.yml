@@ -16,16 +16,11 @@ flickr_sources:
 twitter_sources:
   - username: felixoye
     include:  
-    exclude:   
   - username: jessicaoye
     include:  @felixoye
-    exclude:   
   - username: simonoye
     include:  @felixoye
-    exclude:   
   - username: philoye
     include:  @felixoye
-    exclude:   
   - username: jenioye
     include:  @felixoye
-    exclude:   

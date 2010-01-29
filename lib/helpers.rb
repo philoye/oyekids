@@ -15,10 +15,10 @@ def flickr_src(photo, size=nil)
   "http://farm#{photo[:farm]}.static.flickr.com/#{photo[:server]}/#{photo[:id]}_#{photo[:secret]}#{size && "_#{size}"}.jpg"
 end
 def flickr_url(photo)
-  "http://www.flickr.com/photos/#{photo['owner']['username']}/#{photo['id']}/"
+  "http://www.flickr.com/photos/#{photo[:owner][:username]}/#{photo[:id]}/"
 end
 def flickr_square(photo)
-  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo['title']}">)
+  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo[:title]}">)
 end
 def flickr_embed_code(video,desired_width)
   height_width = calculate_height_width(video,desired_width)
@@ -27,8 +27,8 @@ def flickr_embed_code(video,desired_width)
   %(<object type="application/x-shockwave-flash" width="#{width}" height="#{height}" data="#{video['source']}"  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="flickr_show_info_box=false"></param> <param name="movie" value="#{video['source']}"></param><param name="bgcolor" value="#000000"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="#{video['source']}" bgcolor="#000000" allowfullscreen="true" flashvars="flickr_show_info_box=false" height="#{height}" width="#{width}"></embed></object>)
 end
 def calculate_height_width(item,desired_width)
-  width = item['width']
-  height = item['height']
+  width = item[:width]
+  height = item[:height]
   if (desired_width.to_i < width.to_i)
     height = (desired_width.to_i * height.to_i / width.to_i).to_s
     width = desired_width
@@ -63,59 +63,13 @@ def format_tweet(text)
   text.linkify.link_mentions.link_hash_tags
 end
 
-def gather_all_photos(cache=true)
-  all_items = []
-  @config.flickr_sources.each do |feed|
-    items = Flickr.new(feed['nsid'],cache).photos(:tags => feed['tags'])
-    items.each do |item|
-      item['source'] = "flickr"
-      harmonize_stream(item,"datetaken","local")
-    end
-    all_items = items + all_items
-  end
-  return all_items
-end
-def gather_all_tweets(cache=true)
-  all_items = []
-  @config.twitter_sources.each do |feed|
-    tweets = Twitter.new(feed['username'],cache).timeline
-    items = filter_tweets(tweets,feed['include'],feed['exclude'])
-    items.each do |item|
-      item['source'] = "twitter"
-      harmonize_stream(item,"created_at","utc")
-    end
-    all_items = items + all_items
-  end
-  return all_items
-end
-def filter_tweets(tweets,whitelist,blacklist)
-  if whitelist
-    tweets = tweets.reject{|t| !whitelist.split(',').any?{|w| t['text'].match(w)} }
-  end
-  if blacklist
-    tweets = tweets.reject{|t| whitelist.split(',').any?{|w| t['text'].match(w)} }
-  end
-  return tweets
-end
-def harmonize_stream(item,attribute,tz)
-  bd = DateTime.parse(@config.birthdate.to_s)
-  d  = DateTime.parse(item[attribute])
-  if tz=="utc"
-    d = d.new_offset(Rational(10,24))
-  end
-  item['age_month']  = ((d - bd) / 30.4).to_i.to_s
-  item['calendar_month'] = d.strftime("%Y-%m").to_s
-  item['created'] = d.to_s
-  return item
-end
-
 def sort_and_group(array_of_items,group_by,startdate)
   river = array_of_items.sort_by { |drop| drop[:created] }.reverse!
   return river.group_by do |drop| 
     if group_by == "age_month"
       ((DateTime.parse(drop[:created]) - DateTime.parse(startdate)) / 30.4).to_i.to_s
     else
-      DateTime.parse(drop[:created]).strftime("%Y-%m").to_s
+      DateTime.parse(drop[:created]).strftime("%Y/%m").to_s
     end
   end
 end
