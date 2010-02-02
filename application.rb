@@ -1,15 +1,17 @@
-require 'rubygems' 
 require 'sinatra' 
 require 'haml'
-require 'pp'
 require 'active_support'
+require 'ostruct'
+require 'smoke'
+require 'pp'
 
 module CrossTheStreams
   class Application < Sinatra::Base
 
-    configure do
-      $flickr_api_key = "bffdaa9407fcf762439aedaf938e01ac"
+    $flickr_api_key = ENV['OYEKIDS_FLICKR_API_KEY']
 
+    configure do
+      set :logging, true
       set :haml, {:format => :html4}
       set :public, File.join(File.dirname(__FILE__),'public')
       set :views, File.join(File.dirname(__FILE__),'views')
@@ -23,42 +25,45 @@ module CrossTheStreams
     before do
       domain_array = request.host.split(".")
       if domain_array.first == "www"
-          domain_array.delete_at(0)
+        domain_array.delete_at(0)
       end
       @domain_root = domain_array.first
+      if @domain_root == "localhost" then @domain_root = "simonoye" end
+      @site_config = OpenStruct.new(YAML.load_file("config/#{@domain_root}.yml"))
+      cache_long
+    end
 
-      config = YAML.load_file("config/#{@domain_root}.yml")
-      @site_slug           = config['siteslug']
-      @site_name           = config['name']
-      @avatar              = config['avatar']
-      @about_text          = config['about_text']
-      @birthdate           = config['birthdate']
-      @group_stream_by     = config['group_stream_by']
-      @twitter_feeds       = config['services']['twitter']['users']
-      @flickr_feeds        = config['services']['flickr']['users']
-      @google_analytics_id = config['google_analytics_id']
-      @reinvigorate_id     = config['reinvigorate_id']
+    get '/test' do
+      $app_config.flickr_api_key
     end
 
     get '/' do 
-      tweets = gather_all_tweets(false) # pass "false" to turn off caching, which is fucking things up.
-      photos = gather_all_photos(false)
-      @river = sort_and_group(tweets + photos)
+      @river = []
+      @site_config.twitter_sources.each do |source|
+        @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
+      end
+      @site_config.flickr_sources.each do |source|
+        @river = @river + Smoke[:flickr].flickr_user_id(source['nsid']).flickr_tags(source['tags']).output
+      end
+      @river = sort_and_group(@river,@site_config.group_stream_by,@site_config.birthdate)
       @page_title = ""
       haml :index
     end
-    get '/refresh' do # hit this to bust the cache and refresh all apis.
-      tweets = gather_all_tweets(false)
-      photos = gather_all_photos(false)
-      "Success"
-    end
     get '/tweets/?' do
-      @river = sort_and_group(gather_all_tweets())
+      @river = []
+      @site_config.twitter_sources.each do |source|
+        @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
+      end
+      @river = sort_and_group(@river,@site_config.group_stream_by,@site_config.birthdate)
       @page_title = "Words by "
       haml :index
     end
     get '/photos/?' do
-      @river = sort_and_group(gather_all_photos())
+      @river = []
+      @site_config.flickr_sources.each do |source|
+        @river = @river + Smoke[:flickr].flickr_user_id(source['nsid']).flickr_tags(source['tags']).output
+      end
+      @river = sort_and_group(@river,@site_config.group_stream_by,@site_config.birthdate)
       @page_title = "Photos of "
       haml :index
     end
@@ -67,10 +72,16 @@ module CrossTheStreams
       redirect '/photos'
     end
     get '/photos/:user/:id/?' do
-      nsid = nsid_from_user(params[:user])
-      @photo = Flickr.new(nsid).photo(params[:id])
-      @sizes = Flickr.new(nsid).photo_sizes(params[:id])
-      @comments = Flickr.new(nsid).photo_comments(params[:id])
+      @photo = Smoke[:flickr_photo_info].photo_id(params[:id]).output.first
+      @sizes = Smoke[:flickr_photo_sizes].photo_id(params[:id]).output
+      @comments = Smoke[:flickr_photo_comments].photo_id(params[:id]).output
+      # Hopefully this ugly bit won't be necessary when the source is fixed
+      @comments.each do |comment|
+        comment.delete(:photo_id)
+      end
+      if @comments[0].empty? 
+        @comments.delete_at(0)
+      end
       haml :photo
     end
 

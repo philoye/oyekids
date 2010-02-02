@@ -2,6 +2,7 @@ def versioned_stylesheet(stylesheet)
   __DIR__ = File.dirname(__FILE__)
   "/css/#{stylesheet}.css?" + File.mtime(File.join(__DIR__,"..", 'public', "css", "#{stylesheet}.css")).to_i.to_s
 end
+
 def versioned_javascript(js)
   __DIR__ = File.dirname(__FILE__)
   "/js/#{js}.js?" + File.mtime(File.join(__DIR__,"..", 'public', "js", "#{js}.js")).to_i.to_s
@@ -9,110 +10,6 @@ end
 
 def partial(name)
   haml(:"_#{name}", :layout => false)
-end
-
-def flickr_src(photo, size=nil)
-  "http://farm#{photo['farm']}.static.flickr.com/#{photo['server']}/#{photo['id']}_#{photo['secret']}#{size && "_#{size}"}.jpg"
-end
-def flickr_url(photo)
-  "http://www.flickr.com/photos/#{photo['owner']['username']}/#{photo['id']}/"
-end
-def flickr_square(photo)
-  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo['title']}">)
-end
-def flickr_embed_code(video,desired_width)
-  height_width = calculate_height_width(video,desired_width)
-  width = height_width['width']
-  height = height_width['height']
-  %(<object type="application/x-shockwave-flash" width="#{width}" height="#{height}" data="#{video['source']}"  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="flickr_show_info_box=false"></param> <param name="movie" value="#{video['source']}"></param><param name="bgcolor" value="#000000"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="#{video['source']}" bgcolor="#000000" allowfullscreen="true" flashvars="flickr_show_info_box=false" height="#{height}" width="#{width}"></embed></object>)
-end
-def calculate_height_width(item,desired_width)
-  width = item['width']
-  height = item['height']
-  if (desired_width.to_i < width.to_i)
-    height = (desired_width.to_i * height.to_i / width.to_i).to_s
-    width = desired_width
-  end
-  return { "height" => height, "width" => width }
-end
-
-def photo_path(photo)
-  username = user_from_nsid(photo['owner'])
-  "/photos/#{username}/#{photo['id']}"
-end
-def user_from_nsid(nsid)
-  username = @flickr_feeds.each do |feed_user|
-    if feed_user['nsid'] == nsid
-      username = feed_user['username']
-      return username
-    end
-  end
-end
-def nsid_from_user(text)
-  nsid = @flickr_feeds.each do |user|
-    if text == user['username']
-      nsid = user['nsid']
-      return nsid
-    end
-  end
-end
-
-def twitter_url(tweet)
-  "http://twitter.com/" + tweet['user']['screen_name'] + "/status/" + tweet['id'].to_s
-end
-def format_tweet(text)
-  text.linkify.link_mentions.link_hash_tags
-end
-
-def sort_and_group(array_of_items)
-  river = array_of_items.sort_by { |drop| drop['created'] }.reverse!
-  return river.group_by { |drop| drop[@group_stream_by] }
-end
-
-def gather_all_photos(cache=true)
-  all_items = []
-  @flickr_feeds.each do |feed|
-    items = Flickr.new(feed['nsid'],cache).photos(:tags => feed['tags'])
-    items.each do |item|
-      item['source'] = "flickr"
-      harmonize_stream(item,"datetaken","local")
-    end
-    all_items = items + all_items
-  end
-  return all_items
-end
-def gather_all_tweets(cache=true)
-  all_items = []
-  @twitter_feeds.each do |feed|
-    tweets = Twitter.new(feed['username'],cache).timeline
-    items = filter_tweets(tweets,feed['include'],feed['exclude'])
-    items.each do |item|
-      item['source'] = "twitter"
-      harmonize_stream(item,"created_at","utc")
-    end
-    all_items = items + all_items
-  end
-  return all_items
-end
-def filter_tweets(tweets,whitelist,blacklist)
-  if whitelist
-    tweets = tweets.reject{|t| !whitelist.split(',').any?{|w| t['text'].match(w)} }
-  end
-  if blacklist
-    tweets = tweets.reject{|t| whitelist.split(',').any?{|w| t['text'].match(w)} }
-  end
-  return tweets
-end
-def harmonize_stream(item,attribute,tz)
-  bd = DateTime.parse(@birthdate.to_s)
-  d  = DateTime.parse(item[attribute])
-  if tz=="utc"
-    d = d.new_offset(Rational(10,24))
-  end
-  item['age_month']  = ((d - bd) / 30.4).to_i.to_s
-  item['calendar_month'] = d.strftime("%Y-%m").to_s
-  item['created'] = d.to_s
-  return item
 end
 
 def pretty_date(datetime_string)
@@ -157,17 +54,73 @@ def tracking_code
     </script>
     <script type="text/javascript">
     try {
-    var pageTracker = _gat._getTracker("#{@google_analytics_id}");
+    var pageTracker = _gat._getTracker("#{@site_config.google_analytics_id}");
     pageTracker._trackPageview();
     } catch(err) {}</script>
 
     <script type="text/javascript" src="http://include.reinvigorate.net/re_.js"></script>
     <script type="text/javascript">
-    re_("#{@reinvigorate_id}");
+    re_("#{@site_config.reinvigorate_id}");
     </script>
     
     )
   else
     "<!-- Tracking code goes here in production. -->"
   end
+end
+
+def sort_and_group(array_of_items,group_by,startdate)
+  river = array_of_items.sort_by { |drop| drop[:created_at] }.reverse!
+  return river.group_by do |drop| 
+    if group_by == "age_month"
+      ((DateTime.parse(drop[:created_at]) - DateTime.parse(startdate)) / 30.4).to_i.to_s
+    else
+      DateTime.parse(drop[:created_at]).strftime("%Y/%m").to_s
+    end
+  end
+end
+
+def photo_path(photo)
+  "/photos/#{photo[:user]}/#{photo[:id]}"
+end
+
+def twitter_url(tweet)
+  "http://twitter.com/" + tweet[:user] + "/status/" + tweet['id'].to_s
+end
+
+def format_tweet(text)
+  text.linkify.link_mentions.link_hash_tags
+end
+
+def flickr_src(photo, size=nil)
+  "http://farm#{photo[:farm]}.static.flickr.com/#{photo[:server]}/#{photo[:id]}_#{photo[:secret]}#{size && "_#{size}"}.jpg"
+end
+
+def flickr_url(photo)
+  "http://www.flickr.com/photos/#{photo[:owner][:username]}/#{photo[:id]}/"
+end
+
+def flickr_square(photo)
+  %(<img src="#{flickr_src(photo, "s")}" width="75" height="75" title="#{photo[:title]}">)
+end
+
+def calculate_height_width(item,desired_width)
+  width = item[:width]
+  height = item[:height]
+  if (desired_width.to_i < width.to_i)
+    height = (desired_width.to_i * height.to_i / width.to_i).to_s
+    width = desired_width
+  end
+  return { "height" => height, "width" => width }
+end
+
+def flickr_embed_code(video,desired_width)
+  height_width = calculate_height_width(video,desired_width)
+  width = height_width['width']
+  height = height_width['height']
+  %(<object type="application/x-shockwave-flash" width="#{width}" height="#{height}" data="#{video[:source]}"  classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="flickr_show_info_box=false"></param> <param name="movie" value="#{video[:source]}"></param><param name="bgcolor" value="#000000"></param><param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="#{video[:source]}" bgcolor="#000000" allowfullscreen="true" flashvars="flickr_show_info_box=false" height="#{height}" width="#{width}"></embed></object>)
+end
+
+def cache_long
+	response['Cache-Control'] = "public, max-age=300" unless development?
 end

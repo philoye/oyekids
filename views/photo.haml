@@ -1,40 +1,37 @@
-- @page_title = "“" + @photo['title'] + "”, a photo of "
-
-- photo_size = @sizes.find {|s| s['label'] == "Large"} || @sizes.find {|s| s['label'] == "Original"}
+- @page_title = "“" + @photo[:title] + "”, a photo of "
+- photo_size = @sizes.find {|s| s[:label] == "Large"} || @sizes.find {|s| s[:label] == "Original"}
 
 .photo-container
   .photo-details
 
-    - if @photo['media'] == "photo"
+    - if @photo[:media] == "photo"
       %a{:href=>flickr_url(@photo)}
         - hw = calculate_height_width(photo_size,"628")
-        %img{:src => photo_size['source'], :width => hw['width'], :height=> hw['height'], :alt => @photo['title'], :title => @photo['title']}
+        %img{:src => photo_size[:source], :width => hw['width'], :height=> hw['height'], :alt => @photo[:title], :title => @photo[:title]}
 
-    - elsif @photo['media'] == "video"
-      - video= @sizes.find {|s| s['label'] == "Video Player"}
+    - elsif @photo[:media] == "video"
+      - video= @sizes.find {|s| s[:label] == "Video Player"}
       = flickr_embed_code(video,"628")
 
   .photo-info-container
     .photo-meta
       %ul
-        %li= '“' + @photo['title'] + '”'
-        %li= "by " +  @photo['owner']['realname']
-        - if @photo['description']
-          %li.description= @photo['description']
+        %li= '“' + @photo[:title] + '”'
+        %li= "by " +  @photo[:owner][:realname]
+        - if @photo[:description]
+          %li.description= @photo[:description]
         %li 
           Taken on
-          = pretty_date(@photo['dates']['taken'])
+          = pretty_date(@photo[:dates][:taken])
 
     .photo-comments
       %p
         %strong
-          = pluralize((@photo['comments']).to_i, "comment")
+          = pluralize((@photo[:comments]).to_i, "comment")
           so far
-      - begin
+      - if @comments
         %ol
-        - @comments['comment'].each do |comment|
-          %li= comment
-      - rescue
-
+        - @comments.each do |comment|
+          %li= comment[:comment]
       %p 
         %a{:href=>flickr_url(@photo)} Add your comment on Flickr

@@ -1,34 +1,26 @@
-name: Felix Oye
-siteslug: felixoye
+site_name: Felix Oye
+site_slug: felixoye
 about_text: "Hi, I'm Felix, and welcome to my little corner of the web. My twin sister <a href='http://jessicaoye.com/'>Jessica</a> and I entered the world on 2&nbsp;August&nbsp;2008 and we live in Sydney with my parents and my older brother <a href='http://simonoye.com/'>Simon</a>. Visit regularly to keep up with my adventures."
 avatar: http://farm4.static.flickr.com/3257/3169689939_6ef957dcf4_s.jpg
 group_stream_by: "age_month"
-birthdate: 2008-08-02
+birthdate: "2008-08-02"
 google_analytics_id: "UA-1807438-5"
 reinvigorate_id: "66rl8-i799a79n23"
-services:
-  flickr:
-    users: #whitelist of flickr feeds to check
-      - nsid:     12021774@N05
-        username: philoye
-        tags:     "felix, felixoye"
-      - nsid:     30853535@N00
-        username: jenioye
-        tags:     "felix, felixoye"
-  twitter:
-    users: #whitelist of twitter users to check
-      - username: felixoye
-        include:  
-        exclude:   
-      - username: jessicaoye
-        include:  @felixoye
-        exclude:   
-      - username: simonoye
-        include:  @felixoye
-        exclude:   
-      - username: philoye
-        include:  @felixoye
-        exclude:   
-      - username: jenioye
-        include:  @felixoye
-        exclude:   
+flickr_sources:
+  - nsid:     12021774@N05
+    username: philoye
+    tags:     "felix,felixoye"
+  - nsid:     30853535@N00
+    username: jenioye
+    tags:     "felix,felixoye"
+twitter_sources:
+  - username: felixoye
+    include:  ""
+  - username: jessicaoye
+    include:  @felixoye
+  - username: simonoye
+    include:  @felixoye
+  - username: philoye
+    include:  @felixoye
+  - username: jenioye
+    include:  @felixoye

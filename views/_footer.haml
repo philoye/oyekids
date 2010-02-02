@@ -1,6 +1,6 @@
 .footer
   .about
-    %p= @about_text
+    %p= @site_config.about_text
 
   .links
     %ul
@@ -14,7 +14,7 @@
       - if @domain_root != "oyekids"
         %li
           Need your fix in real time? Follow me on
-          %a{:href => "http://twitter.com/#{@site_slug}"} Twitter
+          %a{:href => "http://twitter.com/#{@site_config.site_slug}"} Twitter
 
   .links
     %ul
