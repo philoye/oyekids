@@ -1,9 +1,9 @@
-# Smoke.configure do |c|
-#   c[:cache][:enabled] = true
-#   c[:cache][:store] = :memory
-#   c[:cache][:expire_in] = 600
-# end
-# 
+Smoke.configure do |c|
+  c[:cache][:enabled] = true
+  c[:cache][:store] = :memory
+  c[:cache][:expire_in] = 600
+end
+
 Smoke.data(:twitter) do
   prepare do
     url "http://twitter.com/statuses/user_timeline/#{username}.xml?count=200"
