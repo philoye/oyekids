@@ -1,9 +1,9 @@
-Smoke.configure do |c|
-  c[:cache][:enabled] = true
-  c[:cache][:store] = :memory
-  c[:cache][:expire_in] = 600
-end
-
+# Smoke.configure do |c|
+#   c[:cache][:enabled] = true
+#   c[:cache][:store] = :memory
+#   c[:cache][:expire_in] = 600
+# end
+# 
 Smoke.data(:twitter) do
   prepare do
     url "http://twitter.com/statuses/user_timeline/#{username}.xml?count=200"
@@ -58,28 +58,35 @@ Smoke.data(:flickr) do
   end
 end
 
-Smoke.yql(:flickr_photo_info) do
+# Smoke.yql(:flickr_photo_info) do
+#   prepare do
+#     select :all
+#     from 'flickr.photos.info'
+#     where :photo_id, photo_id
+#     path :query, :results, :photo
+#   end
+# end
+
+Smoke.data(:flickr_photo_info) do
   prepare do
-    select :all
-    from 'flickr.photos.info'
-    where :photo_id, photo_id
-    path :query, :results, :photo
+    url "http://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=#{ENV['OYEKIDS_FLICKR_API_KEY']}&photo_id=#{photo_id}"
+    path :rsp, :photo
   end
 end
 
-Smoke.yql(:flickr_photo_sizes) do
-  prepare do
-    select :all
-    from 'flickr.photos.sizes'
-    where :photo_id, photo_id
-    path :query, :results, :size
-  end
-end
+# Smoke.yql(:flickr_photo_sizes) do
+#   prepare do
+#     select :all
+#     from 'flickr.photos.sizes'
+#     where :photo_id, photo_id
+#     path :query, :results, :size
+#   end
+# end
 
-Smoke.data(:flickr_photo_comments) do
+Smoke.data(:flickr_photo_sizes) do
   prepare do
-    url "http://api.flickr.com/services/rest/?method=flickr.photos.comments.getList&api_key=#{ENV['OYEKIDS_FLICKR_API_KEY']}&photo_id=#{photo_id}"
-    path :rsp, :comments
+    url "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=#{ENV['OYEKIDS_FLICKR_API_KEY']}&photo_id=#{photo_id}"
+    path :rsp, :sizes, :size
   end
 end
 
@@ -91,3 +98,11 @@ end
 #     from 'flickr.photos.comments.getList'
 #     where :photo_id, '4296997958'
 # end
+
+Smoke.data(:flickr_photo_comments) do
+  prepare do
+    url "http://api.flickr.com/services/rest/?method=flickr.photos.comments.getList&api_key=#{ENV['OYEKIDS_FLICKR_API_KEY']}&photo_id=#{photo_id}"
+    path :rsp, :comments
+  end
+end
+
