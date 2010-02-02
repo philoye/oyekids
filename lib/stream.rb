@@ -44,7 +44,7 @@ end
 
 Smoke.data(:flickr) do
   prepare do
-    url "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=#{$flickr_api_key}&user_id=#{flickr_user_id}&extras=date_taken%2Clast_update%2Cdate_upload%2C+owner_name%2C+media&tags=#{flickr_tags}&per_page=500"
+    url "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=#{ENV['OYEKIDS_FLICKR_API_KEY']}&user_id=#{flickr_user_id}&extras=date_taken%2Clast_update%2Cdate_upload%2C+owner_name%2C+media&tags=#{flickr_tags}&per_page=500"
     path :rsp, :photos, :photo
     
     emit do
@@ -78,7 +78,7 @@ end
 
 Smoke.data(:flickr_photo_comments) do
   prepare do
-    url "http://api.flickr.com/services/rest/?method=flickr.photos.comments.getList&api_key=#{$flickr_api_key}&photo_id=#{photo_id}"
+    url "http://api.flickr.com/services/rest/?method=flickr.photos.comments.getList&api_key=#{ENV['OYEKIDS_FLICKR_API_KEY']}&photo_id=#{photo_id}"
     path :rsp, :comments
   end
 end

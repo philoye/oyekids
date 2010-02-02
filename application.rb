@@ -8,15 +8,13 @@ require 'pp'
 module CrossTheStreams
   class Application < Sinatra::Base
 
-    $flickr_api_key = ENV['OYEKIDS_FLICKR_API_KEY']
-
     configure do
       set :logging, true
       set :haml, {:format => :html4}
       set :public, File.join(File.dirname(__FILE__),'public')
       set :views, File.join(File.dirname(__FILE__),'views')
       set :static, true
-
+      
       Dir.glob('lib/*.rb') do |filename|
         require filename
       end
