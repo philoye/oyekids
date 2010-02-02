@@ -73,13 +73,6 @@ module CrossTheStreams
       @photo = Smoke[:flickr_photo_info].photo_id(params[:id]).output.first
       @sizes = Smoke[:flickr_photo_sizes].photo_id(params[:id]).output
       @comments = Smoke[:flickr_photo_comments].photo_id(params[:id]).output
-      # Hopefully this ugly bit won't be necessary when the source is fixed
-      @comments.each do |comment|
-        comment.delete(:photo_id)
-      end
-      if @comments[0].empty? 
-        @comments.delete_at(0)
-      end
       haml :photo
     end
 
