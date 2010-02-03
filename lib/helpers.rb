@@ -125,11 +125,15 @@ def cache_long
 	response['Cache-Control'] = "public, max-age=600" unless development?
 end
 
-def refresh_feeds
+def refresh_tweets
   @site_config.twitter_sources.each do |source|
     @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
   end
+  return @river
+end
+def refresh_photos
   @site_config.flickr_sources.each do |source|
     @river = @river + Smoke[:flickr].flickr_user_id(source['nsid']).flickr_tags(source['tags']).output
   end
+  return @river
 end

@@ -30,23 +30,25 @@ module CrossTheStreams
     end
 
     get '/' do 
+      cache_long
       @river = []
-      @site_config.twitter_sources.each do |source|
-        @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
-      end
-      @site_config.flickr_sources.each do |source|
-        @river = @river + Smoke[:flickr].flickr_user_id(source['nsid']).flickr_tags(source['tags']).output
-      end
+      refresh_tweets
+      refresh_photos
       @river = sort_and_group(@river,@site_config.group_stream_by,@site_config.birthdate)
       @page_title = ""
       haml :index
     end
+    get '/refresh/?' do
+      Smoke::Cache.clear!
+      @river = []
+      refresh_tweets
+      refresh_photos
+      "Done."
+    end
     get '/tweets/?' do
       cache_long
       @river = []
-      @site_config.twitter_sources.each do |source|
-        @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
-      end
+      refresh_tweets
       @river = sort_and_group(@river,@site_config.group_stream_by,@site_config.birthdate)
       @page_title = "Words by "
       haml :index
@@ -54,9 +56,7 @@ module CrossTheStreams
     get '/photos/?' do
       cache_long
       @river = []
-      @site_config.flickr_sources.each do |source|
-        @river = @river + Smoke[:flickr].flickr_user_id(source['nsid']).flickr_tags(source['tags']).output
-      end
+      refresh_photos
       @river = sort_and_group(@river,@site_config.group_stream_by,@site_config.birthdate)
       @page_title = "Photos of "
       haml :index
