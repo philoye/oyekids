@@ -27,10 +27,10 @@ module CrossTheStreams
       @domain_root = domain_array.first
       if @domain_root == "localhost" then @domain_root = "simonoye" end
       @site_config = OpenStruct.new(YAML.load_file("config/#{@domain_root}.yml"))
-      cache_long
     end
 
     get '/' do 
+      cache_long
       @river = []
       @site_config.twitter_sources.each do |source|
         @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
@@ -42,7 +42,18 @@ module CrossTheStreams
       @page_title = ""
       haml :index
     end
+    get '/refresh/?' do
+      @river = []
+      @site_config.twitter_sources.each do |source|
+        @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
+      end
+      @site_config.flickr_sources.each do |source|
+        @river = @river + Smoke[:flickr].flickr_user_id(source['nsid']).flickr_tags(source['tags']).output
+      end
+      "Cache is refreshed."
+    end
     get '/tweets/?' do
+      cache_long
       @river = []
       @site_config.twitter_sources.each do |source|
         @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
@@ -52,6 +63,7 @@ module CrossTheStreams
       haml :index
     end
     get '/photos/?' do
+      cache_long
       @river = []
       @site_config.flickr_sources.each do |source|
         @river = @river + Smoke[:flickr].flickr_user_id(source['nsid']).flickr_tags(source['tags']).output
@@ -60,11 +72,11 @@ module CrossTheStreams
       @page_title = "Photos of "
       haml :index
     end
-
     get '/photos/:user/?' do
       redirect '/photos'
     end
     get '/photos/:user/:id/?' do
+      cache_long
       @photo = Smoke[:flickr_photo_info].photo_id(params[:id]).output.first
       @sizes = Smoke[:flickr_photo_sizes].photo_id(params[:id]).output
       @comments = Smoke[:flickr_photo_comments].photo_id(params[:id]).output

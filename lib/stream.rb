@@ -105,4 +105,3 @@ Smoke.data(:flickr_photo_comments) do
     path :rsp, :comments
   end
 end
-
