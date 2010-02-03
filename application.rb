@@ -3,7 +3,6 @@ require 'haml'
 require 'active_support'
 require 'ostruct'
 require 'smoke'
-require 'pp'
 
 module CrossTheStreams
   class Application < Sinatra::Base
@@ -29,10 +28,6 @@ module CrossTheStreams
       if @domain_root == "localhost" then @domain_root = "simonoye" end
       @site_config = OpenStruct.new(YAML.load_file("config/#{@domain_root}.yml"))
       cache_long
-    end
-
-    get '/test' do
-      $app_config.flickr_api_key
     end
 
     get '/' do 
