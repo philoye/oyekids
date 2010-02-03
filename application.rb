@@ -25,12 +25,11 @@ module CrossTheStreams
         domain_array.delete_at(0)
       end
       @domain_root = domain_array.first
-      if @domain_root == "localhost" then @domain_root = "simonoye" end
+      if @domain_root == "localhost" then @domain_root = "oyekids" end
       @site_config = OpenStruct.new(YAML.load_file("config/#{@domain_root}.yml"))
     end
 
     get '/' do 
-      cache_long
       @river = []
       @site_config.twitter_sources.each do |source|
         @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
@@ -41,16 +40,6 @@ module CrossTheStreams
       @river = sort_and_group(@river,@site_config.group_stream_by,@site_config.birthdate)
       @page_title = ""
       haml :index
-    end
-    get '/refresh/?' do
-      @river = []
-      @site_config.twitter_sources.each do |source|
-        @river = @river + Smoke[:twitter].username(source['username']).include_text(source['include']).output
-      end
-      @site_config.flickr_sources.each do |source|
-        @river = @river + Smoke[:flickr].flickr_user_id(source['nsid']).flickr_tags(source['tags']).output
-      end
-      "Cache is refreshed."
     end
     get '/tweets/?' do
       cache_long

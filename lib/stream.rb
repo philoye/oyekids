@@ -1,3 +1,5 @@
+require 'smoke'
+
 Smoke.configure do |c|
   c[:cache][:enabled] = true
   c[:cache][:store] = :memory
