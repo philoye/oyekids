@@ -65,7 +65,7 @@ br {
 }
 .content {
   clear: both;
-  overflow: auto;
+  overflow: hidden;
 }
 .footer {
   clear: both;
