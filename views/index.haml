@@ -3,7 +3,7 @@
 .grid-container
   %ul.grid
     - @river.each do |separator,items|
-      -if @group_stream_by == "calendar_month"
+      -if @site_config.group_stream_by == "calendar_month"
         %li.separator
           %h2.calendar
             - d = Date.parse(separator)
@@ -16,10 +16,10 @@
             Months
 
       - items.each do |drop|
-        - if drop['source'] == 'twitter'
+        - if drop[:source] == 'twitter'
           %li.tweet
-            = format_tweet(drop['text']) + "<br>—&nbsp;@" + drop['user']['screen_name'] + ", "
-            %a{:href=> twitter_url(drop)}= pretty_date(drop['created'])
-        - elsif drop['source'] == 'flickr'
+            = format_tweet(drop[:text]) + "<br>—&nbsp;@" + drop[:user] + ", "
+            %a{:href=> twitter_url(drop)}= pretty_date(drop[:created_at])
+        - elsif drop[:source] == 'flickr'
           %li.photo
             %a{:href => photo_path(drop) }= flickr_square(drop)

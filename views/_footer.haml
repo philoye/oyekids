@@ -1,6 +1,6 @@
 .footer
   .about
-    %p= @about_text
+    %p= @site_config.about_text
 
     %p
       Check out just the
@@ -8,8 +8,8 @@
       or the
       %a{:href => "/tweets/"} tweets.
       - if @domain_root != "oyekids"
-        Follow me on
-        %a{:href => "http://twitter.com/#{@site_slug}"} Twitter.
+        Need your fix in real time? Follow me on
+        %a{:href => "http://twitter.com/#{@site_config.site_slug}"} Twitter
 
   .links
     %ul

@@ -1,34 +1,26 @@
-name: Jessica Oye
-siteslug: jessicaoye
+site_name: Jessica Oye
+site_slug: jessicaoye
 about_text: "Hi, I'm Jessica, and welcome to my little corner of the web. My twin brother <a href='http://felixoye.com/'>Felix</a> and I entered the world on 2&nbsp;August&nbsp;2008 and we live in Sydney with my parents and my older brother <a href='http://simonoye.com/'>Simon</a>. Visit regularly to keep up with my adventures."
 avatar: http://farm4.static.flickr.com/3258/3170518772_83651f3958_s.jpg
 group_stream_by: "age_month"
-birthdate: 2008-08-02
+birthdate: "2008-08-02"
 google_analytics_id: "UA-1807438-6"
 reinvigorate_id: "9m06g-o712u9go77"
-services:
-  flickr:
-    users: #whitelist of flickr feeds to check
-      - nsid:     12021774@N05
-        username: philoye
-        tags:     "jessica, jessicaoye"
-      - nsid:     30853535@N00
-        username: jenmonsta
-        tags:     "jessica, jessicaoye"
-  twitter:
-    users: #whitelist of twitter users to check
-      - username: felixoye
-        include:  @jessicaoye
-        exclude:   
-      - username: jessicaoye
-        include:  
-        exclude:   
-      - username: simonoye
-        include:  @jessicaoye
-        exclude:   
-      - username: philoye
-        include:  @jessicaoye
-        exclude:   
-      - username: jenioye
-        include:  @jessicaoye
-        exclude:   
+flickr_sources:
+  - nsid:     12021774@N05
+    username: philoye
+    tags:     "jessica,jessicaoye"
+  - nsid:     30853535@N00
+    username: jenioye
+    tags:     "jessica,jessicaoye"
+twitter_sources:
+  - username: felixoye
+    include:  @jessicaoye
+  - username: jessicaoye
+    include:  ""
+  - username: simonoye
+    include:  @jessicaoye
+  - username: philoye
+    include:  @jessicaoye
+  - username: jenioye
+    include:  @jessicaoye

@@ -1,17 +1,16 @@
 .header
   %ul.grid.navigation
     %li.nav-oyekids
-      %a{:href => "http://oyekids.com/"} Oye kids
+      %a{:href => "http://www.oyekids.com/"} Oye kids
     %li.nav-simonoye
-      %a{:href => "http://simonoye.com/"} Simon
+      %a{:href => "http://www.simonoye.com/"} Simon
     %li.nav-jessicaoye
-      %a{:href => "http://jessicaoye.com/"} Jessica
+      %a{:href => "http://www.jessicaoye.com/"} Jessica
     %li.nav-felixoye
       %a{:href => "http://felixoye.com/"} Felix
 
   .avatar
     %a{:href=>"/"}
-      %img{:src => @avatar, :width => "75", :height =>"75" }
+      %img{:src => @site_config.avatar, :width => "75", :height =>"75" }
   %h1
-    %a{:href=>"/"}= @site_name
-
+    %a{:href=>"/"}= @site_config.site_name
