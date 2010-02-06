@@ -228,21 +228,26 @@ ul.navigation li {
   
 /* Photo details page */
 
-.photo-details-container {
+.photo-wrapper {
   background-color: #1b1b1b;
+}
+
+.photo-details-container {
+  
 }
   .photo-details {
     margin-right: 326px;
     zoom: 1;
+    border-right: 4px solid #222;
   }
     .photo-details a img {
       width: 100%;
-/*        border: 2px solid #222;*/
       -ms-interpolation-mode:bicubic;
     }
-      .photo-details a:hover img {
-/*          border: 2px solid #ccc;*/
-      }
+
+object {
+  display: block;
+}
 
 .photo-info-container {
   background-color: #1b1b1b;
@@ -262,6 +267,7 @@ ul.navigation li {
     margin-top: 24px;
   }
     .photo-comments ol {
+
     }
 
 
