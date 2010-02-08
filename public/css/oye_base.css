@@ -32,6 +32,7 @@ blockquote:before, blockquote:after, q:before, q:after { content: ""; }
 blockquote, q { quotes: "" ""; }
 
 /* Remove annoying border on linked images. */
+a     { outline: none; }
 a img { border: none; }
 
 
