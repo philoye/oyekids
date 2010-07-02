@@ -3,7 +3,7 @@ require 'smoke'
 Smoke.configure do |c|
   c[:cache][:enabled] = true
   c[:cache][:store] = :memory
-  c[:cache][:expire_in] = 600
+  c[:cache][:expire_in] = 90000
 end
 
 Smoke.data(:twitter) do

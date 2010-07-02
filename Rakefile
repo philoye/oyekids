@@ -10,3 +10,7 @@ namespace :feeds do
     refresh_photos
   end
 end
+
+task :cron do
+  Rake::Task['feeds:refresh'].execute
+end
