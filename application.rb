@@ -1,9 +1,3 @@
-require 'sinatra' 
-require 'haml'
-require 'active_support'
-require 'ostruct'
-require 'smoke'
-
 module CrossTheStreams
   class Application < Sinatra::Base
 
@@ -14,7 +8,7 @@ module CrossTheStreams
       set :views, File.join(File.dirname(__FILE__),'views')
       set :static, true
       
-      Dir.glob('lib/*.rb') do |filename|
+      Dir.glob('./lib/*.rb') do |filename|
         require filename
       end
     end

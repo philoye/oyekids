@@ -1,4 +1,9 @@
-require 'application'
+require 'rubygems'
+require 'bundler'
+
+Bundler.require
+
+require './application'
 
 if ENV['RACK_ENV'] != 'production'
   FileUtils.mkdir_p 'log' unless File.exists?('log')
